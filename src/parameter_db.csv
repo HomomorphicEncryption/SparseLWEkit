@@ -1,0 +1,9 @@
+ID,Current Estimation,log2(N),σ,log2(ctmod),HW,Origin
+1,???,17,3.2,2341,128,[HEaaN](https://heaan.it/)
+2,???,16,3.2,1555,192,[HEaaN](https://heaan.it/)
+3,???,16,3.2,117,32,[HEaaN](https://heaan.it/)
+4,???,15,3.2,777,192,[HEaaN](https://heaan.it/)
+5,???,15,3.19,767,192,[OpenFHE](https://openfhe.org/)
+6,???,16,3.19,1553,192,[OpenFHE](https://openfhe.org/)
+7,???,17,3.19,3104,192,[OpenFHE](https://openfhe.org/)
+8,???,16,3.2,300,128,[DESILO FHE](https://fhe.desilo.dev/latest/)

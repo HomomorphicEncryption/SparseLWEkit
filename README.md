@@ -1,12 +1,38 @@
 # Sparse LWE Kit
 
-The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets _(and later estimates for other secret key types)_. Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts. To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
+## Sparse Secrets
+
+**Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
+The idea in common between many of these definitions is a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
+This type of secret is chosen to minimize and/or bound the error growth during FHE computation.
+Here we will not try to quantify what Hamming weight corresponds to a sparse secret, since this is irrelevant to security estimations.
+There are already a few different variations of sparse secrets, and many more could be imagined.
+
+We start by describing traditional (non-sparse) secret keys.
+There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform.
+It is natural to design a secret key of size n containing h ones (resp. 1 and -1), with the remaining values being zeros, and calling it a sparse binary secret (resp. sparse ternary secret) if h is small enough, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
+One could define a similar secret with the uniform distribution instead.
+A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
+- a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
+- a sparse secret could allow any Hamming weight below the threshold h;
+- a sparse secret where each element is sampled from a Gaussian with mean 0 and sigma = 0.01.
+
+## Goals
+
+The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets and to increase transparency in parameter selection and in cryptanalysis efforts.
+To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
 
 ## Cryptanalysis disclaimer
 
-Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is very much a work in progress. New attacks may be found at any time, and the landscape is constantly evolving.
+Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress.
+New attacks may be found at any time, and the landscape is constantly evolving.
+The costs of known attacks can also be revised (upwards and downwards) thanks to refined analyses.
 
-Attacks we are already aware of need to be incorporated into existing tools for use in parameter selection. This means that **existing tools may not give a completely accurate estimate of security**. Existing tools may also take a **long time to run**. In order to mitigate against confusion caused by long running time, we include running time for the tables we provide. We hope this should give users an idea of how long they can expect parameter generation to take.
+Attacks we are already aware of need to be incorporated into existing tools for use in parameter selection.
+This means that **existing tools may not give a completely accurate estimate of security**.
+Existing tools may also take a **long time to run**.
+In order to mitigate against confusion caused by long running time, we include running time for the tables we provide.
+We hope this should give users an idea of how long they can expect parameter generation to take.
 
 <!-- Extra note: I was also wondering about what parameters there are security reductions for? Perhaps we could write about this somewhere. -->
 
@@ -14,70 +40,77 @@ Attacks we are already aware of need to be incorporated into existing tools for 
 
 Disclaimer: These tools either do not incorporate sparse secrets, or do so to a limited extent (only some attacks).
 
-We want to demystify these tools and also explain the connections (e.g. different parameters for the same scheme? How do they relate to the estimator? Run times of children tools are faster than lattice estimator?)
-
 - [Lattice estimator](https://github.com/malb/lattice-estimator), the most commonly used tool.
-  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for FHE parameter generation.
+  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for parameter generation of specific
+FHE schemes.
   - [TFHE parameter selection tool](https://eprint.iacr.org/2022/704) which gives optimised parameter sets for TFHE as tables in the paper, and is implemented in the [tfhe-rs library](https://github.com/zama-ai/tfhe-rs).
-  - Tool from the TII team which gives [specific formulas](https://eprint.iacr.org/2024/1895.pdf) for estimating security. 
+  - Tool from the TII FHE team which gives [specific formulas](https://eprint.iacr.org/2024/1895.pdf) for estimating security. 
   - Security Guidelines for Implementing Homomorphic Encryption, with [tables](https://eprint.iacr.org/2024/463) and also [code](https://github.com/gong-cr/FHE-Security-Guidelines).
 - Benchmarking tool from the Meta AI team [Benchmarking Attacks on Learning with Errors (LWE)](https://github.com/facebookresearch/LWE-benchmarking) implementing the Salsa etc line of attacks as well as hybrid MitM attacks.
 - [Sparse LWE-specific tool](https://github.com/yonghaason/SparseLWE-estimator) from Yongha Son which is no longer maintained. It implements two papers from 2019 on the [hybrid-dual attack](https://eprint.iacr.org/2019/1114) and [hybrid-primal attack](https://eprint.iacr.org/2019/1019).
+- [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator) from [this paper](https://eprint.iacr.org/2022/1473).
 
 ## Supported Attacks for Each Tool
 
 Here we give a table listing sparse secret attacks and we describe which tool(s) estimate their cost.
 Where possible we provide a link to the implementation of the estimate. 
 
-| Attack | [Lattice estimator](https://github.com/malb/lattice-estimator) | [SparseLWE-estimator](https://github.com/yonghaason/SparseLWE-estimator) | [LWE-benchmarking](https://github.com/facebookresearch/LWE-benchmarking)
-|:-------------------------------------------------------------------------------:|:--:|:--:|:--:|
-| [C:HowgraveGraham07](https://www.iacr.org/archive/crypto2007/46220150/46220150.pdf)        | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-primal.html) | ❌ | ❌ |
-| [EC:Albrecht17](https://eprint.iacr.org/2017/047.pdf)                                      | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html) | ❌ | ❌ |
-| [IEEEAccess:CHHS19](https://eprint.iacr.org/2019/1114.pdf)                                 | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html) | ✅ | ❌ |
-| [WAHC:SC19](https://eprint.iacr.org/2019/1019.pdf)                                 | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.prob/estimator.prob.mitm_babai_probability.html) | ✅ | ❌ |
-| [Eprint:EJK20](https://eprint.iacr.org/2020/515.pdf)                                  | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html) | ❌ | ❌ |
-| [C:May21](https://eprint.iacr.org/2021/216.pdf)                                  | ❌ | ❌ | ❌ |
-| [IMACC:KM21](https://eprint.iacr.org/2021/1255.pdf)                                 | ❌ | ❌ | ❌ |
-| [AC:GJ21](https://www.iacr.org/archive/asiacrypt2021/130900114/130900114.pdf) 🔒 | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.lwe_dual/estimator.lwe_dual.dual_hybrid.html) ⚠️ | ❌ | ❌ |
-| [ACISP:BLLW22](https://eprint.iacr.org/2022/1330.pdf) 🔒                              | ❌ | ❌ | ❌ |
-| [Eprint:HKLS22](https://eprint.iacr.org/2022/1473.pdf) 🔒                              | ❌ | ❌ | ❌ |
-| [AFRICAC:NMWSYCL24](https://eprint.iacr.org/2024/443.pdf)                                  | ❌ | ❌ | ✅ |
-| [Eprint:LLSW24](https://eprint.iacr.org/2024/824)                                      | ❌ | ❌ | ✅ |
-| [NeurIPS:WCCL22](https://arxiv.org/abs/2207.04785)                                      | ❌ | ❌ | ✅ |
-| [CCS:LSWMGCL23](https://eprint.iacr.org/2023/340)                                      | ❌ | ❌ | ✅ |
-| [NeurIPS:YWACL23](https://eprint.iacr.org/2023/968)                                      | ❌ | ❌ | ✅ |
-| [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150)                                      | ❌ | ❌ | ✅ |
+| Attack                                                                              | [Lattice estimator](https://github.com/malb/lattice-estimator)                                                            | [LWE-benchmarking](https://github.com/facebookresearch/LWE-benchmarking)   | [SparseLWE-estimator](https://github.com/yonghaason/SparseLWE-estimator)   | [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator)   |
+|:------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------|:---------------------------------------------------------------------------|:-----------------------------------------------------------------------------------|
+| [C:HowgraveGraham07](https://www.iacr.org/archive/crypto2007/46220150/46220150.pdf) | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-primal.html)                                        | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [EC:Albrecht17](https://eprint.iacr.org/2017/047.pdf)                               | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html)                                          | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [IEEEAccess:CHHS19](https://eprint.iacr.org/2019/1114.pdf)                          | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html)                                          | ❌                                                                          | ✅                                                                          | ❌                                                                                  |
+| [WAHC:SC19](https://eprint.iacr.org/2019/1019.pdf)                                  | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.prob/estimator.prob.mitm_babai_probability.html) | ❌                                                                          | ✅                                                                          | ❌                                                                                  |
+| [Eprint:EJK20](https://eprint.iacr.org/2020/515.pdf)                                | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html)                                          | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [AC:GJ21](https://www.iacr.org/archive/asiacrypt2021/130900114/130900114.pdf)🔒      | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.lwe_dual/estimator.lwe_dual.dual_hybrid.html) ⚠️ | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [IMACC:KM21](https://eprint.iacr.org/2021/1255.pdf)                                 | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [C:May21](https://eprint.iacr.org/2021/216.pdf)                                     | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [ACISP:BLLW22](https://eprint.iacr.org/2022/1330.pdf)🔒                              | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [Eprint:HKLS22](https://eprint.iacr.org/2022/1473.pdf)                              | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ✅                                                                                  |
+| [NeurIPS:WCCL22](https://arxiv.org/abs/2207.04785)                                  | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [CCS:LSWMGCL23](https://eprint.iacr.org/2023/340)                                   | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [NeurIPS:YWACL23](https://eprint.iacr.org/2023/968)                                 | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [Eprint:LLSW24](https://eprint.iacr.org/2024/824)                                   | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [AFRICAC:NMWSYCL24](https://eprint.iacr.org/2024/443.pdf)                           | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150)                                | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+
+Note: The tools in this table are listed in order of the number of attacks they implement, i.e. the number of check marks. Where the numbers of attacks supported are the same, tools are listed alphabetically.
 
 #### Notes
 - 🔒 means that there is an implementation but it is not publicly available.
-- ⚠️ means that the estimator only partially implements this attack (for example only the non-sparse variant is implemented)
+- ⚠️ means that the tool only partially implements this attack (for example only the non-sparse variant is implemented)
 
 ## Parameters Sets
 
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-| ID | Current Estimation | N     | σ   | PQ     | P | Q | HW  | ... |
-|:--:|:------------------:|:-----:|:---:|:------:|:-:|:-:|:---:|:---:|
-| 1  | 166.7 bits         | 2**14 | 3.2 | 2**300 |   |   | 192 | ... |
-| 2  |  79 bits           | ?     | ?   | ?      | ? | ? | ?   | ... |
-| 3  | 114 bits           | ?     | ?   | ?      | ? | ? | ?   | ... |
-| 4  | 130 bits           | ?     | ?   | ?      | ? | ? | ?   | ... |
+|   ID | Current Estimation   |   log2(N) |    σ |   log2(ctmod) |   HW | Origin                                       |
+|-----:|:---------------------|----------:|-----:|--------------:|-----:|:---------------------------------------------|
+|    3 | ???                  |        16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                   |
+|    1 | ???                  |        17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                   |
+|    8 | ???                  |        16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/) |
+|    2 | ???                  |        16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                   |
+|    4 | ???                  |        15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                   |
+|    5 | ???                  |        15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)              |
+|    6 | ???                  |        16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/)              |
+|    7 | ???                  |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)              |
+
+
+Note: In this table, parameter sets are listed in order of increasing Hamming weight. Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
 
 #### Notations
-- N: dimension of the RLWE instance (size of the polynomials)
+- log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
 - σ: standard deviation of the noise at secret key encryption time
-- PQ: largest ciphertext modulus (during key switch)
-- Q: ciphertext modulus at maximum level
-- P: auxiliary ciphertext modulus
+- log2(ctmod): log2 of the ciphertext modulus (for instance Q corresponds to PQ in the CKKS context)
 - HW: Hamming weight of the secret key
 
 ### Security Estimations
 
-The following table provides, for every parameter set and for each tool, the security estimate (on top) and the running time to get it (in the bottom).
-The fallowing architecture was used to run the estimations: ...
+The following table provides, for every parameter set and for each tool, the security estimate (on top) and the running time to get it (at the bottom).
+The following architecture was used to run the estimations: ...
 
-<!-- todo: fill with the description of the machine used to run the estimations -->
+TODO: fill with the description of the machine used to run the estimations.
 
 _(version A: without the best attack)_
 
