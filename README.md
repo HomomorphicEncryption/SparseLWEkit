@@ -1,10 +1,10 @@
 # Sparse LWE Kit
 
-The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets _(and later estimates for other secret key types)_. Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts. To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
+The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets. Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts. To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
 
 ## Cryptanalysis disclaimer
 
-Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is very much a work in progress. New attacks may be found at any time, and the landscape is constantly evolving.
+Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress. New attacks may be found at any time, and the landscape is constantly evolving.
 
 Attacks we are already aware of need to be incorporated into existing tools for use in parameter selection. This means that **existing tools may not give a completely accurate estimate of security**. Existing tools may also take a **long time to run**. In order to mitigate against confusion caused by long running time, we include running time for the tables we provide. We hope this should give users an idea of how long they can expect parameter generation to take.
 
@@ -14,12 +14,11 @@ Attacks we are already aware of need to be incorporated into existing tools for 
 
 Disclaimer: These tools either do not incorporate sparse secrets, or do so to a limited extent (only some attacks).
 
-We want to demystify these tools and also explain the connections (e.g. different parameters for the same scheme? How do they relate to the estimator? Run times of children tools are faster than lattice estimator?)
-
 - [Lattice estimator](https://github.com/malb/lattice-estimator), the most commonly used tool.
-  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for FHE parameter generation.
+  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for parameter generation of specific
+FHE schemes.
   - [TFHE parameter selection tool](https://eprint.iacr.org/2022/704) which gives optimised parameter sets for TFHE as tables in the paper, and is implemented in the [tfhe-rs library](https://github.com/zama-ai/tfhe-rs).
-  - Tool from the TII team which gives [specific formulas](https://eprint.iacr.org/2024/1895.pdf) for estimating security. 
+  - Tool from the TII FHE team which gives [specific formulas](https://eprint.iacr.org/2024/1895.pdf) for estimating security. 
   - Security Guidelines for Implementing Homomorphic Encryption, with [tables](https://eprint.iacr.org/2024/463) and also [code](https://github.com/gong-cr/FHE-Security-Guidelines).
 - Benchmarking tool from the Meta AI team [Benchmarking Attacks on Learning with Errors (LWE)](https://github.com/facebookresearch/LWE-benchmarking) implementing the Salsa etc line of attacks as well as hybrid MitM attacks.
 - [Sparse LWE-specific tool](https://github.com/yonghaason/SparseLWE-estimator) from Yongha Son which is no longer maintained. It implements two papers from 2019 on the [hybrid-dual attack](https://eprint.iacr.org/2019/1114) and [hybrid-primal attack](https://eprint.iacr.org/2019/1019).
