@@ -4,7 +4,7 @@ The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secr
 
 ## Cryptanalysis disclaimer
 
-Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress. New attacks may be found at any time, and the landscape is constantly evolving.
+Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress. New attacks may be found at any time, and the landscape is constantly evolving. The costs of known attacks can also be revised (upwards and downwards) thanks to refined analyses.
 
 Attacks we are already aware of need to be incorporated into existing tools for use in parameter selection. This means that **existing tools may not give a completely accurate estimate of security**. Existing tools may also take a **long time to run**. In order to mitigate against confusion caused by long running time, we include running time for the tables we provide. We hope this should give users an idea of how long they can expect parameter generation to take.
 
