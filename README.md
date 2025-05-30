@@ -1,6 +1,9 @@
 # Sparse LWE Kit
 
-The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets. Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts. To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
+The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets. 
+**Sparse secrets** are defined as those which have a fixed hamming weight that is sufficiently small. Confusingly, ‘sufficiently small’ is defined differently across the literature. In order to avoid confusion (hopefully), we consider _sparse secrets to be any fixed hamming weight secrets_ and include the hamming weight, h, as a parameter.
+In the literature, a common choice of hamming weight is h = 64. However, a variety of hamming weights h are considered from 32 up to 1024. It is important to consider the value of n in relation to h in order to measure the sparsity of a secret.
+Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts. To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
 
 ## Cryptanalysis disclaimer
 
@@ -22,6 +25,7 @@ FHE schemes.
   - Security Guidelines for Implementing Homomorphic Encryption, with [tables](https://eprint.iacr.org/2024/463) and also [code](https://github.com/gong-cr/FHE-Security-Guidelines).
 - Benchmarking tool from the Meta AI team [Benchmarking Attacks on Learning with Errors (LWE)](https://github.com/facebookresearch/LWE-benchmarking) implementing the Salsa etc line of attacks as well as hybrid MitM attacks.
 - [Sparse LWE-specific tool](https://github.com/yonghaason/SparseLWE-estimator) from Yongha Son which is no longer maintained. It implements two papers from 2019 on the [hybrid-dual attack](https://eprint.iacr.org/2019/1114) and [hybrid-primal attack](https://eprint.iacr.org/2019/1019).
+- [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator) from [this paper](https://eprint.iacr.org/2022/1473).
 
 ## Supported Attacks for Each Tool
 
@@ -39,7 +43,7 @@ Where possible we provide a link to the implementation of the estimate.
 | [IMACC:KM21](https://eprint.iacr.org/2021/1255.pdf)                                 | ❌ | ❌ | ❌ |
 | [AC:GJ21](https://www.iacr.org/archive/asiacrypt2021/130900114/130900114.pdf) 🔒 | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.lwe_dual/estimator.lwe_dual.dual_hybrid.html) ⚠️ | ❌ | ❌ |
 | [ACISP:BLLW22](https://eprint.iacr.org/2022/1330.pdf) 🔒                              | ❌ | ❌ | ❌ |
-| [Eprint:HKLS22](https://eprint.iacr.org/2022/1473.pdf) 🔒                              | ❌ | ❌ | ❌ |
+| [Eprint:HKLS22](https://eprint.iacr.org/2022/1473.pdf) [🔗](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator)                            | ❌ | ❌ | ❌ |
 | [AFRICAC:NMWSYCL24](https://eprint.iacr.org/2024/443.pdf)                                  | ❌ | ❌ | ✅ |
 | [Eprint:LLSW24](https://eprint.iacr.org/2024/824)                                      | ❌ | ❌ | ✅ |
 | [NeurIPS:WCCL22](https://arxiv.org/abs/2207.04785)                                      | ❌ | ❌ | ✅ |
@@ -56,12 +60,12 @@ Where possible we provide a link to the implementation of the estimate.
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-| ID | Current Estimation | N     | σ   | PQ     | P | Q | HW  | ... |
-|:--:|:------------------:|:-----:|:---:|:------:|:-:|:-:|:---:|:---:|
-| 1  | 166.7 bits         | 2**14 | 3.2 | 2**300 |   |   | 192 | ... |
-| 2  |  79 bits           | ?     | ?   | ?      | ? | ? | ?   | ... |
-| 3  | 114 bits           | ?     | ?   | ?      | ? | ? | ?   | ... |
-| 4  | 130 bits           | ?     | ?   | ?      | ? | ? | ?   | ... |
+| ID | Current Estimation | N     | σ   | PQ     | HW  | ... |
+|:--:|:------------------:|:-----:|:---:|:------:|:---:|:---:|
+| 1  | 166.7 bits         | 2**14 | 3.2 | 2**300 | 192 | ... |
+| 2  |  79 bits           | ?     | ?   | ?      | ?   | ... |
+| 3  | 114 bits           | ?     | ?   | ?      | ?   | ... |
+| 4  | 130 bits           | ?     | ?   | ?      | ?   | ... |
 
 #### Notations
 - N: dimension of the RLWE instance (size of the polynomials)
