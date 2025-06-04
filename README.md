@@ -76,7 +76,9 @@ For further information about how the security levels are obtained, please refer
 | 3  | 114 bits           | ?     | ?   | ?      | ?   | ... |
 | 4  | 130 bits           | ?     | ?   | ?      | ?   | ... |
 
-| ID | Current Estimation | N     | σ   | logPQ  | HW  |
+(to be integrated in the table above, here are the Heaan parameter sets. we could add a column to inform where the parameter sets come from)
+
+| ID | Current Estimation | logN  | σ   | logPQ  | HW  |
 |:--:|:------------------:|:-----:|:---:|:------:|:---:|
 |    |                    | 17    | 3.2 |   2341 | 128 |
 |    |                    | 16    | 3.2 |   1555 | 192 |
