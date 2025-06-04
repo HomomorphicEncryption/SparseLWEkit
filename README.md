@@ -1,15 +1,24 @@
 # Sparse LWE Kit
 
 The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets. 
-**Sparse secrets** are defined as those which have a Hamming weight that is sufficiently small. Confusingly, ‘sufficiently small’ is defined differently across the literature. In order to avoid confusion (hopefully), we consider _sparse secrets to be any fixed hamming weight secrets_ and include the hamming weight, h, as a parameter.
-In the literature, a common choice of Hamming weight is h = 64. However, a variety of Hamming weights h are considered from 32 up to 1024. It is important to consider the value of the dimension n in relation to h in order to measure the sparsity of a secret.
-Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts. To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
+**Sparse secrets** are defined as those which have a Hamming weight that is sufficiently small. Confusingly, ‘sufficiently small’ is defined differently across the literature.
+In order to avoid confusion (hopefully), we consider _sparse secrets to be any fixed hamming weight secrets_ and include the hamming weight, h, as a parameter.
+In the literature, a common choice of Hamming weight is h = 64.
+However, a variety of Hamming weights h are considered from 32 up to 1024. It is important to consider the value of the dimension n in relation to h in order to measure the sparsity of a secret.
+Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts.
+To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
 
 ## Cryptanalysis disclaimer
 
-Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress. New attacks may be found at any time, and the landscape is constantly evolving. The costs of known attacks can also be revised (upwards and downwards) thanks to refined analyses.
+Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress.
+New attacks may be found at any time, and the landscape is constantly evolving.
+The costs of known attacks can also be revised (upwards and downwards) thanks to refined analyses.
 
-Attacks we are already aware of need to be incorporated into existing tools for use in parameter selection. This means that **existing tools may not give a completely accurate estimate of security**. Existing tools may also take a **long time to run**. In order to mitigate against confusion caused by long running time, we include running time for the tables we provide. We hope this should give users an idea of how long they can expect parameter generation to take.
+Attacks we are already aware of need to be incorporated into existing tools for use in parameter selection.
+This means that **existing tools may not give a completely accurate estimate of security**.
+Existing tools may also take a **long time to run**.
+In order to mitigate against confusion caused by long running time, we include running time for the tables we provide.
+We hope this should give users an idea of how long they can expect parameter generation to take.
 
 <!-- Extra note: I was also wondering about what parameters there are security reductions for? Perhaps we could write about this somewhere. -->
 
