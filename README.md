@@ -76,6 +76,13 @@ For further information about how the security levels are obtained, please refer
 | 3  | 114 bits           | ?     | ?   | ?      | ?   | ... |
 | 4  | 130 bits           | ?     | ?   | ?      | ?   | ... |
 
+| ID | Current Estimation | N     | σ   | logPQ  | HW  |
+|:--:|:------------------:|:-----:|:---:|:------:|:---:|
+|    |                    | 17    | 3.2 |   2341 | 128 |
+|    |                    | 16    | 3.2 |   1555 | 192 |
+|    |                    | 16    | 3.2 |    117 | 32  |
+|    |                    | 15    | 3.2 |    777 | 192 |
+
 #### Notations
 - N: dimension of the RLWE instance (size of the polynomials)
 - σ: standard deviation of the noise at secret key encryption time
