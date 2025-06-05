@@ -1,8 +1,14 @@
 # Sparse LWE Kit
 
-The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets. 
+The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets.
+
+TODO: consensus on this definition?
+
+
 **Sparse secrets** are defined as those which have a Hamming weight that is sufficiently small. Confusingly, ‘sufficiently small’ is defined differently across the literature.
-In order to avoid confusion (hopefully), we consider _sparse secrets to be any fixed hamming weight secrets_ and include the hamming weight, h, as a parameter.
+In order to avoid confusion (hopefully), we consider _sparse secrets to be any publicly-known fixed hamming weight secrets_, i.e. include the hamming weight, h, as a parameter.
+To be more precise, in a secret key of size n, exactely h elements will be different from 0 and n-h elements will be equal to 0.
+
 In the literature, a common choice of Hamming weight is h = 64.
 However, a variety of Hamming weights h are considered from 32 up to 1024. It is important to consider the value of the dimension n in relation to h in order to measure the sparsity of a secret.
 Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts.
