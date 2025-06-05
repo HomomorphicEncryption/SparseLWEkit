@@ -84,8 +84,9 @@ For further information about how the security levels are obtained, please refer
 |  3 |        ???         | 16     | 3.2  |    117      | 32  | Heaan      |
 |  4 |        ???         | 15     | 3.2  |    777      | 192 | Heaan      |
 |  5 |        ???         | 15     | 3.19 |    767      | 192 | OpenFHE    |
-|  6 |        ???         | 16     | 3.19 |   3104      | 192 | OpenFHE    |
-|  7 |        ???         | 16     | 3.2  |    300      | 128 | DESILO FHE |
+|  6 |        ???         | 16     | 3.19 |   1553      | 192 | OpenFHE    |
+|  7 |        ???         | 17     | 3.19 |   3104      | 192 | OpenFHE    |
+|  8 |        ???         | 16     | 3.2  |    300      | 128 | DESILO FHE |
 
 TODO: come up with a way to sort the lines to avoid an unfair display (current estimation, log2(N), ...).
 TODO: add links for the libraries.
