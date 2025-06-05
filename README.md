@@ -60,6 +60,8 @@ Where possible we provide a link to the implementation of the estimate.
 | [NeurIPS:YWACL23](https://eprint.iacr.org/2023/968)                                      | ❌ | ❌ | ✅ | ❌ |
 | [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150)                                      | ❌ | ❌ | ✅ | ❌ |
 
+TODO: come up with a way to sort the columns to avoid an unfair display (alphabetically, number of checks, ...).
+
 #### Notes
 - 🔒 means that there is an implementation but it is not publicly available.
 - ⚠️ means that the estimator only partially implements this attack (for example only the non-sparse variant is implemented)
@@ -69,28 +71,23 @@ Where possible we provide a link to the implementation of the estimate.
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-| ID | Current Estimation | N     | σ   | PQ     | HW  | ... |
-|:--:|:------------------:|:-----:|:---:|:------:|:---:|:---:|
-| 1  | 166.7 bits         | 2**14 | 3.2 | 2**300 | 192 | ... |
-| 2  |  79 bits           | ?     | ?   | ?      | ?   | ... |
-| 3  | 114 bits           | ?     | ?   | ?      | ?   | ... |
-| 4  | 130 bits           | ?     | ?   | ?      | ?   | ... |
+| ID | Current Estimation | log2(N)| σ    | log2(ctmod) | HW  | Origin     |
+|:--:|:------------------:|:------:|:----:|:-----------:|:---:|:----------:|
+|  1 |        ???         | 17     | 3.2  |   2341      | 128 | Heaan      |
+|  2 |        ???         | 16     | 3.2  |   1555      | 192 | Heaan      |
+|  3 |        ???         | 16     | 3.2  |    117      | 32  | Heaan      |
+|  4 |        ???         | 15     | 3.2  |    777      | 192 | Heaan      |
+|  5 |        ???         | 15     | 3.19 |    767      | 192 | OpenFHE    |
+|  6 |        ???         | 16     | 3.19 |   3104      | 192 | OpenFHE    |
+|  7 |        ???         | 16     | 3.2  |    300      | 128 | DESILO FHE |
 
-(to be integrated in the table above, here are the Heaan parameter sets. we could add a column to inform where the parameter sets come from)
-
-| ID | Current Estimation | logN  | σ   | logPQ  | HW  |
-|:--:|:------------------:|:-----:|:---:|:------:|:---:|
-|    |                    | 17    | 3.2 |   2341 | 128 |
-|    |                    | 16    | 3.2 |   1555 | 192 |
-|    |                    | 16    | 3.2 |    117 | 32  |
-|    |                    | 15    | 3.2 |    777 | 192 |
+TODO: come up with a way to sort the lines to avoid an unfair display (current estimation, log2(N), ...).
+TODO: add links for the libraries.
 
 #### Notations
-- N: dimension of the RLWE instance (size of the polynomials)
+- log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
 - σ: standard deviation of the noise at secret key encryption time
-- PQ: largest ciphertext modulus (during key switch)
-- Q: ciphertext modulus at maximum level
-- P: auxiliary ciphertext modulus
+- log2(ctmod): log2 of the ciphertext modulus (for instance Q corresponds to PQ in the CKKS context)
 - HW: Hamming weight of the secret key
 
 ### Security Estimations
@@ -98,7 +95,7 @@ For further information about how the security levels are obtained, please refer
 The following table provides, for every parameter set and for each tool, the security estimate (on top) and the running time to get it (in the bottom).
 The fallowing architecture was used to run the estimations: ...
 
-<!-- todo: fill with the description of the machine used to run the estimations -->
+TODO: fill with the description of the machine used to run the estimations.
 
 _(version A: without the best attack)_
 
