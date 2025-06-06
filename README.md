@@ -6,8 +6,8 @@ TODO: consensus on this definition?
 
 
 **Sparse secrets** are defined as those which have a Hamming weight that is sufficiently small. Confusingly, ‘sufficiently small’ is defined differently across the literature.
-In order to avoid confusion (hopefully), we consider _sparse secrets to be any publicly-known fixed hamming weight secrets_, i.e. include the hamming weight, h, as a parameter.
-To be more precise, in a secret key of size n, exactely h elements will be different from 0 and n-h elements will be equal to 0.
+In order to avoid confusion (hopefully), we consider _sparse secrets to be any publicly-known fixed Hamming weight secrets_, i.e. include the Hamming weight, h, as a parameter.
+To be more precise, in a secret key of size n, exactly h elements will be different from 0 and n-h elements will be equal to 0.
 
 In the literature, a common choice of Hamming weight is h = 64.
 However, a variety of Hamming weights h are considered from 32 up to 1024. It is important to consider the value of the dimension n in relation to h in order to measure the sparsity of a secret.
@@ -79,10 +79,10 @@ For further information about how the security levels are obtained, please refer
 
 | ID | Current Estimation | log2(N)| σ    | log2(ctmod) | HW  | Origin     |
 |:--:|:------------------:|:------:|:----:|:-----------:|:---:|:----------:|
-|  1 |        ???         | 17     | 3.2  |   2341      | 128 | Heaan      |
-|  2 |        ???         | 16     | 3.2  |   1555      | 192 | Heaan      |
-|  3 |        ???         | 16     | 3.2  |    117      | 32  | Heaan      |
-|  4 |        ???         | 15     | 3.2  |    777      | 192 | Heaan      |
+|  1 |        ???         | 17     | 3.2  |   2341      | 128 | HEaaN      |
+|  2 |        ???         | 16     | 3.2  |   1555      | 192 | HEaaN      |
+|  3 |        ???         | 16     | 3.2  |    117      | 32  | HEaaN      |
+|  4 |        ???         | 15     | 3.2  |    777      | 192 | HEaaN      |
 |  5 |        ???         | 15     | 3.19 |    767      | 192 | OpenFHE    |
 |  6 |        ???         | 16     | 3.19 |   1553      | 192 | OpenFHE    |
 |  7 |        ???         | 17     | 3.19 |   3104      | 192 | OpenFHE    |
