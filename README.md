@@ -1,9 +1,22 @@
 # Sparse LWE Kit
 
-The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets.
+## Sparse Secrets
 
-TODO: consensus on this definition?
+**Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
+They usually convey the idea of a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
+The motivation is always to minimize and/or bound the error growth during FHE computation.
+We will not try to quantify the smallness of Hamming weights qualifying for the sparse terminology because it is irrelevant to security estimations.
 
+There are already a few different **variations of sparse secrets**, and many more could be imagined.
+Let's start with traditional (non-sparse) secret keys, there are four main random distributions for their secret coefficients: uniform binary, uniform ternary, discretized Gaussian and uniform.
+It as natural to design a secret key of size _n_ containing _h_ zeros (public knowledge), where the rest is filled with ones (resp. 1 and -1), and calling it a sparse binary secret (resp. sparse ternary secret) if _h_ is small enough, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
+One could define a similar secret with the uniform distribution instead.
+Regarding the choice of a Hamming weight _h_, often in the literature one finds _h = 64_, however, a variety of Hamming weights are considered in practice from 32 up to 1024.
+
+As mentioned above, there are many **variations of sparse secrets**, for instance:
+- a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
+- a sparse secret could allow any Hamming weight below the threshold _h_;
+- ???.
 
 **Sparse secrets** are defined as those which have a Hamming weight that is sufficiently small. Confusingly, ‘sufficiently small’ is defined differently across the literature.
 In order to avoid confusion (hopefully), we consider _sparse secrets to be any publicly-known fixed Hamming weight secrets_, i.e. include the Hamming weight, h, as a parameter.
@@ -12,6 +25,11 @@ To be more precise, in a secret key of size n, exactly h elements will be differ
 In the literature, a common choice of Hamming weight is h = 64.
 However, a variety of Hamming weights h are considered from 32 up to 1024. It is important to consider the value of the dimension n in relation to h in order to measure the sparsity of a secret.
 Another aim of the project is to increase transparency in parameter selection and cryptanalysis efforts.
+To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
+
+## Goals
+
+The sparseLWEkit aims to provide parameter sets for FHE schemes with sparse secrets and to increase transparency in parameter selection and in cryptanalysis efforts.
 To enable this, we give an overview of where different cryptanalysis work is currently implemented and give justification of how libraries choose parameters with sparse secrets.
 
 ## Cryptanalysis disclaimer
