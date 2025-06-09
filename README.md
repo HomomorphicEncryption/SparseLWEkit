@@ -79,17 +79,16 @@ For further information about how the security levels are obtained, please refer
 
 | ID | Current Estimation | log2(N)| σ    | log2(ctmod) | HW  | Origin     |
 |:--:|:------------------:|:------:|:----:|:-----------:|:---:|:----------:|
-|  1 |        ???         | 17     | 3.2  |   2341      | 128 | HEaaN      |
-|  2 |        ???         | 16     | 3.2  |   1555      | 192 | HEaaN      |
-|  3 |        ???         | 16     | 3.2  |    117      | 32  | HEaaN      |
-|  4 |        ???         | 15     | 3.2  |    777      | 192 | HEaaN      |
-|  5 |        ???         | 15     | 3.19 |    767      | 192 | OpenFHE    |
-|  6 |        ???         | 16     | 3.19 |   1553      | 192 | OpenFHE    |
-|  7 |        ???         | 17     | 3.19 |   3104      | 192 | OpenFHE    |
-|  8 |        ???         | 16     | 3.2  |    300      | 128 | DESILO FHE |
+|  1 |        ???         | 17     | 3.2  |   2341      | 128 | [HEaaN](https://heaan.it/)      |
+|  2 |        ???         | 16     | 3.2  |   1555      | 192 | [HEaaN](https://heaan.it/)      |
+|  3 |        ???         | 16     | 3.2  |    117      | 32  | [HEaaN](https://heaan.it/)      |
+|  4 |        ???         | 15     | 3.2  |    777      | 192 | [HEaaN](https://heaan.it/)      |
+|  5 |        ???         | 15     | 3.19 |    767      | 192 | [OpenFHE](https://openfhe.org/)    |
+|  6 |        ???         | 16     | 3.19 |   1553      | 192 | [OpenFHE](https://openfhe.org/)    |
+|  7 |        ???         | 17     | 3.19 |   3104      | 192 | [OpenFHE](https://openfhe.org/)    |
+|  8 |        ???         | 16     | 3.2  |    300      | 128 | [DESILO FHE](https://fhe.desilo.dev/latest/) |
 
 TODO: come up with a way to sort the lines to avoid an unfair display (current estimation, log2(N), ...).
-TODO: add links for the libraries.
 
 #### Notations
 - log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
@@ -99,8 +98,8 @@ TODO: add links for the libraries.
 
 ### Security Estimations
 
-The following table provides, for every parameter set and for each tool, the security estimate (on top) and the running time to get it (in the bottom).
-The fallowing architecture was used to run the estimations: ...
+The following table provides, for every parameter set and for each tool, the security estimate (on top) and the running time to get it (at the bottom).
+The following architecture was used to run the estimations: ...
 
 TODO: fill with the description of the machine used to run the estimations.
 
