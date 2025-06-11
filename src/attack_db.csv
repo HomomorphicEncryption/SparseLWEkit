@@ -1,0 +1,17 @@
+Venue,Authors,Year,Paper,Note,[Lattice estimator](https://github.com/malb/lattice-estimator),[SparseLWE-estimator](https://github.com/yonghaason/SparseLWE-estimator),[LWE-benchmarking](https://github.com/facebookresearch/LWE-benchmarking),[PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator)
+C,HowgraveGraham,2007,https://www.iacr.org/archive/crypto2007/46220150/46220150.pdf,empty,[✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-primal.html),❌,❌,❌
+EC,Albrecht,2017,https://eprint.iacr.org/2017/047.pdf,empty,[✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html),❌,❌,❌
+IEEEAccess,CHHS,2019,https://eprint.iacr.org/2019/1114.pdf,empty,[✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html),✅,❌,❌
+WAHC,SC,2019,https://eprint.iacr.org/2019/1019.pdf,empty,[✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.prob/estimator.prob.mitm_babai_probability.html),✅,❌,❌
+Eprint,EJK,2020,https://eprint.iacr.org/2020/515.pdf,empty,[✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html),❌,❌,❌
+C,May,2021,https://eprint.iacr.org/2021/216.pdf,empty,❌,❌,❌,❌
+IMACC,KM,2021,https://eprint.iacr.org/2021/1255.pdf,empty,❌,❌,❌,❌
+AC,GJ,2021,https://www.iacr.org/archive/asiacrypt2021/130900114/130900114.pdf,🔒,[✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.lwe_dual/estimator.lwe_dual.dual_hybrid.html) ⚠️,❌,❌,❌
+ACISP,BLLW,2022,https://eprint.iacr.org/2022/1330.pdf,🔒,❌,❌,❌, ❌
+Eprint,HKLS,2022,https://eprint.iacr.org/2022/1473.pdf,empty,❌,❌,❌,✅
+AFRICAC,NMWSYCL,2024,https://eprint.iacr.org/2024/443.pdf,empty,❌,❌,✅,❌
+Eprint,LLSW,2024,https://eprint.iacr.org/2024/824,empty,❌,❌,✅, ❌
+NeurIPS,WCCL,2022,https://arxiv.org/abs/2207.04785,empty,❌,❌,✅, ❌
+CCS,LSWMGCL,2023,https://eprint.iacr.org/2023/340,empty,❌,❌,✅,❌
+NeurIPS,YWACL,2023,https://eprint.iacr.org/2023/968,empty,❌,❌,✅,❌
+Eprint,SWYNSCL,2024,https://eprint.iacr.org/2024/150,empty,❌,❌,✅,❌
