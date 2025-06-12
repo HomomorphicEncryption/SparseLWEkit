@@ -55,24 +55,24 @@ FHE schemes.
 Here we give a table listing sparse secret attacks and we describe which tool(s) estimate their cost.
 Where possible we provide a link to the implementation of the estimate. 
 
-| Attack | [Lattice estimator](https://github.com/malb/lattice-estimator) | [SparseLWE-estimator](https://github.com/yonghaason/SparseLWE-estimator) | [LWE-benchmarking](https://github.com/facebookresearch/LWE-benchmarking) | [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator) |
-|:-------------------------------------------------------------------------------:|:--:|:--:|:--:|:--:|
-| [C:HowgraveGraham07](https://www.iacr.org/archive/crypto2007/46220150/46220150.pdf)        | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-primal.html) | ❌ | ❌ | ❌ |
-| [EC:Albrecht17](https://eprint.iacr.org/2017/047.pdf)                                      | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html) | ❌ | ❌ | ❌ |
-| [IEEEAccess:CHHS19](https://eprint.iacr.org/2019/1114.pdf)                                 | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html) | ✅ | ❌ | ❌ |
-| [WAHC:SC19](https://eprint.iacr.org/2019/1019.pdf)                                 | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.prob/estimator.prob.mitm_babai_probability.html) | ✅ | ❌ | ❌ |
-| [Eprint:EJK20](https://eprint.iacr.org/2020/515.pdf)                                  | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html) | ❌ | ❌ | ❌ |
-| [C:May21](https://eprint.iacr.org/2021/216.pdf)                                  | ❌ | ❌ | ❌ | ❌ |
-| [IMACC:KM21](https://eprint.iacr.org/2021/1255.pdf)                                 | ❌ | ❌ | ❌ | ❌ |
-| [AC:GJ21](https://www.iacr.org/archive/asiacrypt2021/130900114/130900114.pdf) 🔒 | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.lwe_dual/estimator.lwe_dual.dual_hybrid.html) ⚠️ | ❌ | ❌ | ❌ |
-| [ACISP:BLLW22](https://eprint.iacr.org/2022/1330.pdf) 🔒                              | ❌ | ❌ | ❌ |  ❌ |
-| [Eprint:HKLS22](https://eprint.iacr.org/2022/1473.pdf)                             | ❌ | ❌ | ❌ |  ✅ |
-| [AFRICAC:NMWSYCL24](https://eprint.iacr.org/2024/443.pdf)                                  | ❌ | ❌ | ✅ | ❌ |
-| [Eprint:LLSW24](https://eprint.iacr.org/2024/824)                                      | ❌ | ❌ | ✅ |  ❌ |
-| [NeurIPS:WCCL22](https://arxiv.org/abs/2207.04785)                                      | ❌ | ❌ | ✅ |  ❌ |
-| [CCS:LSWMGCL23](https://eprint.iacr.org/2023/340)                                      | ❌ | ❌ | ✅ | ❌ |
-| [NeurIPS:YWACL23](https://eprint.iacr.org/2023/968)                                      | ❌ | ❌ | ✅ | ❌ |
-| [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150)                                      | ❌ | ❌ | ✅ | ❌ |
+| Attack                                                                              | [Lattice estimator](https://github.com/malb/lattice-estimator)                                                            | [LWE-benchmarking](https://github.com/facebookresearch/LWE-benchmarking)   | [SparseLWE-estimator](https://github.com/yonghaason/SparseLWE-estimator)   | [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator)   |
+|:------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------|:---------------------------------------------------------------------------|:-----------------------------------------------------------------------------------|
+| [C:HowgraveGraham07](https://www.iacr.org/archive/crypto2007/46220150/46220150.pdf) | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-primal.html)                                        | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [EC:Albrecht17](https://eprint.iacr.org/2017/047.pdf)                               | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html)                                          | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [IEEEAccess:CHHS19](https://eprint.iacr.org/2019/1114.pdf)                          | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html)                                          | ❌                                                                          | ✅                                                                          | ❌                                                                                  |
+| [WAHC:SC19](https://eprint.iacr.org/2019/1019.pdf)                                  | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.prob/estimator.prob.mitm_babai_probability.html) | ❌                                                                          | ✅                                                                          | ❌                                                                                  |
+| [Eprint:EJK20](https://eprint.iacr.org/2020/515.pdf)                                | [✅](https://lattice-estimator.readthedocs.io/en/latest/algorithms/lwe-dual.html)                                          | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [AC:GJ21](https://www.iacr.org/archive/asiacrypt2021/130900114/130900114.pdf)🔒      | [✅](https://lattice-estimator.readthedocs.io/en/latest/_apidoc/estimator.lwe_dual/estimator.lwe_dual.dual_hybrid.html) ⚠️ | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [IMACC:KM21](https://eprint.iacr.org/2021/1255.pdf)                                 | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [C:May21](https://eprint.iacr.org/2021/216.pdf)                                     | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [ACISP:BLLW22](https://eprint.iacr.org/2022/1330.pdf)🔒                              | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ❌                                                                                  |
+| [Eprint:HKLS22](https://eprint.iacr.org/2022/1473.pdf)                              | ❌                                                                                                                         | ❌                                                                          | ❌                                                                          | ✅                                                                                  |
+| [NeurIPS:WCCL22](https://arxiv.org/abs/2207.04785)                                  | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [CCS:LSWMGCL23](https://eprint.iacr.org/2023/340)                                   | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [NeurIPS:YWACL23](https://eprint.iacr.org/2023/968)                                 | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [Eprint:LLSW24](https://eprint.iacr.org/2024/824)                                   | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [AFRICAC:NMWSYCL24](https://eprint.iacr.org/2024/443.pdf)                           | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
+| [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150)                                | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
 
 TODO: come up with a way to sort the columns to avoid an unfair display (alphabetically, number of checks, ...).
 
@@ -85,16 +85,17 @@ TODO: come up with a way to sort the columns to avoid an unfair display (alphabe
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-| ID | Current Estimation | log2(N)| σ    | log2(ctmod) | HW  | Origin     |
-|:--:|:------------------:|:------:|:----:|:-----------:|:---:|:----------:|
-|  1 |        ???         | 17     | 3.2  |   2341      | 128 | [HEaaN](https://heaan.it/)      |
-|  2 |        ???         | 16     | 3.2  |   1555      | 192 | [HEaaN](https://heaan.it/)      |
-|  3 |        ???         | 16     | 3.2  |    117      | 32  | [HEaaN](https://heaan.it/)      |
-|  4 |        ???         | 15     | 3.2  |    777      | 192 | [HEaaN](https://heaan.it/)      |
-|  5 |        ???         | 15     | 3.19 |    767      | 192 | [OpenFHE](https://openfhe.org/)    |
-|  6 |        ???         | 16     | 3.19 |   1553      | 192 | [OpenFHE](https://openfhe.org/)    |
-|  7 |        ???         | 17     | 3.19 |   3104      | 192 | [OpenFHE](https://openfhe.org/)    |
-|  8 |        ???         | 16     | 3.2  |    300      | 128 | [DESILO FHE](https://fhe.desilo.dev/latest/) |
+|   ID | Current Estimation   |   log2(N) |    σ |   log2(ctmod) |   HW | Origin                                       |
+|-----:|:---------------------|----------:|-----:|--------------:|-----:|:---------------------------------------------|
+|    3 | ???                  |        16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                   |
+|    1 | ???                  |        17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                   |
+|    8 | ???                  |        16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/) |
+|    2 | ???                  |        16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                   |
+|    4 | ???                  |        15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                   |
+|    5 | ???                  |        15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)              |
+|    6 | ???                  |        16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/)              |
+|    7 | ???                  |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)              |
+
 
 TODO: come up with a way to sort the lines to avoid an unfair display (current estimation, log2(N), ...).
 
