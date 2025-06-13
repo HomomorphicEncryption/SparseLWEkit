@@ -74,11 +74,11 @@ Where possible we provide a link to the implementation of the estimate.
 | [AFRICAC:NMWSYCL24](https://eprint.iacr.org/2024/443.pdf)                           | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
 | [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150)                                | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
 
-TODO: come up with a way to sort the columns to avoid an unfair display (alphabetically, number of checks, ...).
+Note: The tools in this table are listed in order of the number of attacks they implement, i.e. the number of check marks. Where the numbers of attacks supported are the same, tools are listed alphabetically.
 
 #### Notes
 - 🔒 means that there is an implementation but it is not publicly available.
-- ⚠️ means that the estimator only partially implements this attack (for example only the non-sparse variant is implemented)
+- ⚠️ means that the tool only partially implements this attack (for example only the non-sparse variant is implemented)
 
 ## Parameters Sets
 
@@ -97,7 +97,7 @@ For further information about how the security levels are obtained, please refer
 |    7 | ???                  |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)              |
 
 
-TODO: come up with a way to sort the lines to avoid an unfair display (current estimation, log2(N), ...).
+Note: In this table, parameter sets are listed in order of increasing Hamming weight. Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
 
 #### Notations
 - log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
