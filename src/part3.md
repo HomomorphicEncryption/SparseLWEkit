@@ -1,6 +1,6 @@
 
 
-TODO: come up with a way to sort the lines to avoid an unfair display (current estimation, log2(N), ...).
+Note: In this table, parameter sets are listed in order of increasing Hamming weight. Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
 
 #### Notations
 - log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
