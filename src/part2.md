@@ -1,9 +1,9 @@
 
-TODO: come up with a way to sort the columns to avoid an unfair display (alphabetically, number of checks, ...).
+Note: The tools in this table are listed in order of the number of attacks they implement, i.e. the number of check marks. Where the numbers of attacks supported are the same, tools are listed alphabetically.
 
 #### Notes
 - 🔒 means that there is an implementation but it is not publicly available.
-- ⚠️ means that the estimator only partially implements this attack (for example only the non-sparse variant is implemented)
+- ⚠️ means that the tool only partially implements this attack (for example only the non-sparse variant is implemented)
 
 ## Parameters Sets
 
