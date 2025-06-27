@@ -1,6 +1,6 @@
 
 
-Note: In this table, parameter sets are listed in order of increasing Hamming weight. Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
+Note: In this table, parameter sets are listed in order of increasing Hamming weight and then increasing log2(ctmod). Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
 
 #### Notations
 - log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)

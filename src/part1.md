@@ -4,8 +4,8 @@
 
 **Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
 The idea in common between many of these definitions is a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
-This type of secret is chosen to minimize and/or bound the error growth during FHE computation.
-Here we will not try to quantify what Hamming weight corresponds to a sparse secret, since this is irrelevant to security estimations.
+This type of secret can be chosen for several reasons, including minimizing and/or bound the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
+Here we will not try to quantify what Hamming weight corresponds to a sparse secret, since we will consider concrete values in security estimations.
 There are already a few different variations of sparse secrets, and many more could be imagined.
 
 We start by describing traditional (non-sparse) secret keys.
@@ -15,7 +15,7 @@ One could define a similar secret with the uniform distribution instead.
 A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
 - a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
 - a sparse secret could allow any Hamming weight below the threshold h;
-- a sparse secret where each element is sampled from a Gaussian with mean 0 and sigma = 0.01.
+- a sparse secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01.
 
 ## Goals
 

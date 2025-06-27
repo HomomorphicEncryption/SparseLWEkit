@@ -4,7 +4,7 @@ import pandas as pd
 parameter_db = pd.read_csv('src/parameter_db.csv')  
 
 # sorting rows by Hamming weight
-parameter_db.sort_values(by=['HW'], inplace=True)
+parameter_db.sort_values(by=['HW','log2(ctmod)'], inplace=True)
 
 # print the markdown table
 print(parameter_db.to_markdown(index=False))

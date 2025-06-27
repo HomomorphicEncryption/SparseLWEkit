@@ -4,8 +4,8 @@
 
 **Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
 The idea in common between many of these definitions is a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
-This type of secret is chosen to minimize and/or bound the error growth during FHE computation.
-Here we will not try to quantify what Hamming weight corresponds to a sparse secret, since this is irrelevant to security estimations.
+This type of secret can be chosen for several reasons, including minimizing and/or bound the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
+Here we will not try to quantify what Hamming weight corresponds to a sparse secret, since we will consider concrete values in security estimations.
 There are already a few different variations of sparse secrets, and many more could be imagined.
 
 We start by describing traditional (non-sparse) secret keys.
@@ -15,7 +15,7 @@ One could define a similar secret with the uniform distribution instead.
 A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
 - a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
 - a sparse secret could allow any Hamming weight below the threshold h;
-- a sparse secret where each element is sampled from a Gaussian with mean 0 and sigma = 0.01.
+- a sparse secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01.
 
 ## Goals
 
@@ -85,19 +85,26 @@ Note: The tools in this table are listed in order of the number of attacks they 
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-|   ID | Current Estimation   |   log2(N) |    σ |   log2(ctmod) |   HW | Origin                                       |
-|-----:|:---------------------|----------:|-----:|--------------:|-----:|:---------------------------------------------|
-|    3 | ???                  |        16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                   |
-|    1 | ???                  |        17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                   |
-|    8 | ???                  |        16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/) |
-|    2 | ???                  |        16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                   |
-|    4 | ???                  |        15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                   |
-|    5 | ???                  |        15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)              |
-|    6 | ???                  |        16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/)              |
-|    7 | ???                  |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)              |
+|   ID | Current Estimation   |   log2(N) |    σ |   log2(ctmod) |   HW | Origin                                                                                          |
+|-----:|:---------------------|----------:|-----:|--------------:|-----:|:------------------------------------------------------------------------------------------------|
+|   14 | ???                  |        15 | 3.2  |            84 |   32 | [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                 |
+|   15 | ???                  |        15 | 3.2  |            96 |   32 | [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                 |
+|   12 | ???                  |        16 | 3.2  |           116 |   32 | [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                 |
+|    3 | ???                  |        16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                                                                      |
+|   10 | ???                  |        16 | 3.2  |           121 |   32 | [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                 |
+|    8 | ???                  |        16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/)                                                    |
+|    1 | ???                  |        17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                                                                      |
+|    5 | ???                  |        15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)                                                                 |
+|   13 | ???                  |        15 | 3.2  |           768 |  192 | [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                 |
+|    4 | ???                  |        15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                                                                      |
+|    9 | ???                  |        16 | 3.2  |          1546 |  192 | [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                 |
+|   11 | ???                  |        16 | 3.2  |          1547 |  192 | [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                 |
+|    6 | ???                  |        16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/) [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6) |
+|    2 | ???                  |        16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                                                                      |
+|    7 | ???                  |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)                                                                 |
 
 
-Note: In this table, parameter sets are listed in order of increasing Hamming weight. Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
+Note: In this table, parameter sets are listed in order of increasing Hamming weight and then increasing log2(ctmod). Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
 
 #### Notations
 - log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
