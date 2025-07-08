@@ -8,6 +8,10 @@ Note: In this table, parameter sets are listed in order of increasing Hamming we
 - log2(ctmod): log2 of the ciphertext modulus (for instance Q corresponds to PQ in the CKKS context)
 - HW: Hamming weight of the secret key
 
+#### Instantiation with two parameter sets at once
+
+TODO: encapsulation technique and mention the parameter sets that come together, and Lattigo special case and DESILO special case?
+
 ### Security Estimations
 
 The following table provides, for every parameter set and for each tool, the security estimate (on top) and the running time to get it (at the bottom).
