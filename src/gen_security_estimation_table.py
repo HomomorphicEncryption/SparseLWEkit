@@ -10,9 +10,6 @@ tool_name = 'lattice_estimator'
 # load the database
 le_db = pd.read_csv('src/data/'+tool_name+'.csv')
 
-# # sorting rows by Hamming weight
-# le_db.sort_values(by=['ID'], inplace=True)
-
 # keep only the security estimations
 sec_db = le_db[['dual_hybrid_sec','dual_sec', 
        'bdd_mitm_hybrid_sec',  'bdd_hybrid_sec',
@@ -31,6 +28,9 @@ le_summary_str = pd.DataFrame(le_summary_str.tolist(), columns=["[Lattice estima
 
 # add the parameter set IDs 
 le_summary_str = pd.concat([le_db['ID'],le_summary_str],axis=1)
+
+# sorting rows by Hamming weight
+le_summary_str.sort_values(by=['ID'], inplace=True)
 
 # print the markdown table
 print(le_summary_str.to_markdown(index=False))

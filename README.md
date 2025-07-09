@@ -118,14 +118,14 @@ TODO: fill with the description of the machine used to run the estimations.
 
 |   ID | [Lattice estimator](https://github.com/malb/lattice-estimator)   |
 |-----:|:-----------------------------------------------------------------|
-|    5 | 134.3 bits (bdd_mitm_hybrid_sec) 34m25.6s                        |
-|    4 | 132.12 bits (CHHS19_mitm_sec) 36m47.2s                           |
-|    6 | 133.99 bits (bdd_mitm_hybrid_sec) 51m9.1s                        |
-|    3 | 164.58 bits (CHHS19_mitm_sec) 30m14.7s                           |
-|    8 | 321.96 bits (CHHS19_mitm_sec) 1h24m21.5s                         |
-|    2 | 133.84 bits (bdd_mitm_hybrid_sec) 49m46.5s                       |
-|    7 | 135.28 bits (CHHS19_mitm_sec) 1h40m23.0s                         |
 |    1 | 157.19 bits (CHHS19_mitm_sec) 1h47m0.5s                          |
+|    2 | 133.84 bits (bdd_mitm_hybrid_sec) 49m46.5s                       |
+|    3 | 164.58 bits (CHHS19_mitm_sec) 30m14.7s                           |
+|    4 | 132.12 bits (CHHS19_mitm_sec) 36m47.2s                           |
+|    5 | 134.3 bits (bdd_mitm_hybrid_sec) 34m25.6s                        |
+|    6 | 133.99 bits (bdd_mitm_hybrid_sec) 51m9.1s                        |
+|    7 | 135.28 bits (CHHS19_mitm_sec) 1h40m23.0s                         |
+|    8 | 321.96 bits (CHHS19_mitm_sec) 1h24m21.5s                         |
 
 ### Notes
 
