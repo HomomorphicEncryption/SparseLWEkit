@@ -116,24 +116,16 @@ The following architecture was used to run the estimations: ...
 
 TODO: fill with the description of the machine used to run the estimations.
 
-_(version A: without the best attack)_
-
-| ID  |          Tool A             |            Tool B              |
-|:---:|:---------------------------:|:------------------------------:|
-| 1   |  180 bits <br> _502 min_    |  __166.7 bits__ <br> _16 min_  |
-| 2   |  __79 bits__  <br> _? min_  |  83 bits  <br> _? min_         | 
-| 3   |  __114 bits__  <br> _? min_ |  129 bits  <br> _? min_        | 
-| 4   |  141 bits  <br> _? min_     |  __130 bits__  <br> _? min_    | 
-
-_(version B: with the best attack)_
-
-| ID  | Best Attack | Tool A |Tool B |
-|:---:|:-----------:|:------:|:------:|
-| 1   | [C:HowgraveGraham07](https://www.iacr.org/archive/crypto2007/46220150/46220150.pdf) |  180 bits <br> _502 min_ | __166.7 bits__  <br> _16 min_ |
-| 2   | [C:May21](https://eprint.iacr.org/2021/216.pdf) |  __79 bits__ <br> _? min_  | 83 bits <br> _? min_  |
-| 3   | [Eprint:LLSW24](https://eprint.iacr.org/2024/824) |  __114 bits__ <br> _? min_  | 129 bits <br> _? min_  |
-| 4   | [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150) |  141 bits <br> _? min_  | __130 bits__ <br> _? min_  |
-
+|   ID | [Lattice estimator](https://github.com/malb/lattice-estimator)   |
+|-----:|:-----------------------------------------------------------------|
+|    5 | 134.3 bits (bdd_mitm_hybrid_sec) 34m25.6s                        |
+|    4 | 132.12 bits (CHHS19_mitm_sec) 36m47.2s                           |
+|    6 | 133.99 bits (bdd_mitm_hybrid_sec) 51m9.1s                        |
+|    3 | 164.58 bits (CHHS19_mitm_sec) 30m14.7s                           |
+|    8 | 321.96 bits (CHHS19_mitm_sec) 1h24m21.5s                         |
+|    2 | 133.84 bits (bdd_mitm_hybrid_sec) 49m46.5s                       |
+|    7 | 135.28 bits (CHHS19_mitm_sec) 1h40m23.0s                         |
+|    1 | 157.19 bits (CHHS19_mitm_sec) 1h47m0.5s                          |
 
 ### Notes
 

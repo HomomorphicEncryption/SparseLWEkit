@@ -4,3 +4,5 @@ all:
 	cat src/markdown/part2.md >> README.md
 	python3 src/gen_parameter_table.py >> README.md
 	cat src/markdown/part3.md >> README.md
+	python3 src/gen_security_estimation_table.py >> README.md
+	cat src/markdown/part4.md >> README.md
