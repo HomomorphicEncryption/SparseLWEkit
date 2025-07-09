@@ -23,7 +23,7 @@ le_summary = pd.concat([pd.DataFrame(sec_db.min(axis="columns"), columns=['lowes
 
 # add and the CPU time and concat into a single string
 le_summary = pd.concat([le_summary,le_db['cpu time']],axis=1)
-le_summary_str = le_summary.apply(lambda x: str(x['lowest_sec']) + ' bits ('+x['best_attack']+') '+x['cpu time'], axis=1)
+le_summary_str = le_summary.apply(lambda x: str(x['lowest_sec']) + ' bits ('+x['best_attack'].replace('_sec', '')+') '+x['cpu time'], axis=1)
 le_summary_str = pd.DataFrame(le_summary_str.tolist(), columns=["[Lattice estimator](https://github.com/malb/lattice-estimator)"])
 
 # add the parameter set IDs 
