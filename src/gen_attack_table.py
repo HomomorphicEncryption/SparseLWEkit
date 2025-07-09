@@ -1,7 +1,7 @@
 import pandas as pd
 
 # load the database
-attack_db = pd.read_csv('src/attack_db.csv')  
+attack_db = pd.read_csv('src/data/attack_db.csv')  
 
 # sort rows by chronological order for the attack's year of publication and then by alphabetical order for the authors
 attack_db.sort_values(by=['Year','Authors'], inplace=True)
