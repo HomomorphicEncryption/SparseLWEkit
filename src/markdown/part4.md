@@ -1,3 +1,4 @@
+
 TODO: need to indicate in the table when the lattice estimator did not estimate all the attacks.
 
 #### Rule of thumb when the estimators do not provide a result
