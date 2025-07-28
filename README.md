@@ -130,6 +130,8 @@ TODO: fill with the description of the machine used to run the estimations.
 |    8 | 321.96 bits (CHHS19_mitm) 1h24m21.5s                             |
 |    9 | 734.16 bits (CHHS19_mitm) ???                                    |
 |   10 | 232.52 bits (CHHS19_mitm) ???                                    |
+TODO: need to indicate in the table when the lattice estimator did not estimate all the attacks.
+
 #### Rule of thumb when the estimators do not provide a result
 
 There is a general **rule of thumb** that can be used to have an intuition on the security estimates of a parameter set **when the estimators are not providing a result**: if you fix all the parameters but one, modifying this specific parameter _(only this one)_ has the following impact on security:
@@ -144,7 +146,7 @@ There is a general **rule of thumb** that can be used to have an intuition on th
     - decreasing HW decreases the security
     - increasing HW increases the security
 
-This rule of thumb was used to estimate the security of the parameter set ID 8 (DESILO FHE). The lattice estimator was not able to provide a proper security estimate for this parameter set, however it was able to estimate the parameter set ID 10. In the case of parameter set ID 10, the lattice estimator gave an estimate for security of 237 bits with the attack _bdd_mitm_hybrid_. It is then possible to use the rule of thumb on N to observe that the security of ID 8 is greater or equal to that of ID 10.
+This rule of thumb was used to estimate the security of the parameter set ID 8 (DESILO FHE). The lattice estimator was not able to provide a proper security estimate for this parameter set, however it was able to estimate the parameter set ID 10. In the case of parameter set ID 10, the lattice estimator gave an estimate for security of 232.52 bits with the attack _bdd_mitm_hybrid_. It is then possible to use the rule of thumb on N to observe that the security of ID 8 is greater or equal to that of ID 10.
 
 
 ### Notes
