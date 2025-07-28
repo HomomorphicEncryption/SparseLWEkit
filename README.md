@@ -85,27 +85,27 @@ Where possible we provide a link to the implementation of the estimate.
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-|   ID |   log2(N) |    σ |   log2(ctmod) |   HW | Origin                                                                                                                                                 |
-|-----:|----------:|-----:|--------------:|-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    3 |        16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                                                                                                                             |
-|    8 |        16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/)                                                                                                           |
-|   10 |        15 | 3.2  |           300 |  128 |                                                                                                                                                        |
-|    1 |        17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                                                                                                                             |
-|    9 |        16 | 3.2  |            61 |  192 | [Lattigo](https://github.com/tuneinsight/lattigo/blob/84f6bc33cb5bd086f595ea3cc2b63f4dd74b2662/circuits/ckks/bootstrapping/parameters_literal.go#L125) |
-|    5 |        15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)                                                                                                                        |
-|    4 |        15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                                                                                                                             |
-|    6 |        16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/) [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                                        |
-|    2 |        16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                                                                                                                             |
-|    7 |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)                                                                                                                        |
+|   ID |   log2(skdim) |    σ |   log2(ctmod) |   HW | Origin                                                                                                                                                 |
+|-----:|--------------:|-----:|--------------:|-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    3 |            16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    8 |            16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/)                                                                                                           |
+|   10 |            15 | 3.2  |           300 |  128 |                                                                                                                                                        |
+|    1 |            17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    9 |            16 | 3.2  |            61 |  192 | [Lattigo](https://github.com/tuneinsight/lattigo/blob/84f6bc33cb5bd086f595ea3cc2b63f4dd74b2662/circuits/ckks/bootstrapping/parameters_literal.go#L125) |
+|    5 |            15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)                                                                                                                        |
+|    4 |            15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    6 |            16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/) [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                                        |
+|    2 |            16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    7 |            17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)                                                                                                                        |
 
 
 Note: In this table, parameter sets are listed in order of increasing Hamming weight and then increasing log2(ctmod). Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
 
 #### Notations
-- log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
+- skdim: dimension of the secret key of the LWE/RLWE instance (corresponding to the size of the polynomials in RLWE), earlier called n in this page
 - σ: standard deviation of the noise at secret key encryption time
 - log2(ctmod): log2 of the (maximal) ciphertext modulus (for instance ctmod often corresponds to Q, or to PQ in the CKKS context)
-- HW: Hamming weight of the secret key
+- HW: Hamming weight of the secret key, earlier called h in this page
 
 #### Instantiation with two parameter sets at once
 
@@ -140,9 +140,9 @@ There is a general **rule of thumb** that can be used to have an intuition on th
 - **Fix all the parameters but ctmod**:
     - decreasing ctmod increases the security
     - increasing ctmod decreases the security 
-- **Fix all the parameters but N**:
-    - increasing N increases the security
-    - decreasing N decreases the security
+- **Fix all the parameters but skdim**:
+    - increasing skdim increases the security
+    - decreasing skdim decreases the security
 - **Fix all the parameters but HW**:
     - decreasing HW decreases the security
     - increasing HW increases the security
