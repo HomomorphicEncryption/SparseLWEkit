@@ -128,6 +128,8 @@ TODO: fill with the description of the machine used to run the estimations.
 |    6 | 133.99 bits (bdd_mitm_hybrid) 51m9.1s                            |
 |    7 | 135.28 bits (CHHS19_mitm) 1h40m23.0s                             |
 |    8 | 321.96 bits (CHHS19_mitm) 1h24m21.5s                             |
+|    9 | 734.16 bits (CHHS19_mitm) ???                                    |
+|   10 | 232.52 bits (CHHS19_mitm) ???                                    |
 #### Rule of thumb when the estimators do not provide a result
 
 There is a general **rule of thumb** that can be used to have an intuition on the security estimates of a parameter set **when the estimators are not providing a result**: if you fix all the parameters but one, modifying this specific parameter _(only this one)_ has the following impact on security:
