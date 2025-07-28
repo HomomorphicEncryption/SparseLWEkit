@@ -130,6 +130,7 @@ TODO: fill with the description of the machine used to run the estimations.
 |    8 | 321.96 bits (CHHS19_mitm) 1h24m21.5s                             |
 |    9 | 734.16 bits (CHHS19_mitm) ???                                    |
 |   10 | 232.52 bits (CHHS19_mitm) ???                                    |
+
 TODO: need to indicate in the table when the lattice estimator did not estimate all the attacks.
 
 #### Rule of thumb when the estimators do not provide a result
