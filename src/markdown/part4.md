@@ -1,3 +1,5 @@
+TODO: need to indicate in the table when the lattice estimator did not estimate all the attacks.
+
 #### Rule of thumb when the estimators do not provide a result
 
 There is a general **rule of thumb** that can be used to have an intuition on the security estimates of a parameter set **when the estimators are not providing a result**: if you fix all the parameters but one, modifying this specific parameter _(only this one)_ has the following impact on security:
