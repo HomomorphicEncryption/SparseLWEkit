@@ -4,18 +4,18 @@
 
 **Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
 The idea in common between many of these definitions is a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
-This type of secret can be chosen for several reasons, including minimizing and/or bound the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
-Here we will not try to quantify what Hamming weight corresponds to a sparse secret, since we will consider concrete values in security estimations.
+This type of secret can be chosen for several reasons, including minimizing and/or bounding the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
+Here we will not try to quantify what Hamming weight corresponds to a sparse secret, rather we will consider concrete values in security estimations.
 There are already a few different variations of sparse secrets, and many more could be imagined.
 
 We start by describing traditional (non-sparse) secret keys.
 There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform.
-It is natural to design a secret key of size n containing h ones (resp. 1 and -1), with the remaining values being zeros, and calling it a sparse binary secret (resp. sparse ternary secret) if h is small enough, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
+It is natural to design a secret key of size n containing h ones (resp. 1 and -1), with the remaining values being zeros, and calling it a sparse binary secret (resp. sparse ternary secret) if h is sufficiently small, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
 One could define a similar secret with the uniform distribution instead.
 A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
 - a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
 - a sparse secret could allow any Hamming weight below the threshold h;
-- a sparse secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01.
+- a secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01 could be defined as a sparse secret.
 
 ## Goals
 
@@ -49,9 +49,10 @@ FHE schemes.
 - Benchmarking tool from the Meta AI team [Benchmarking Attacks on Learning with Errors (LWE)](https://github.com/facebookresearch/LWE-benchmarking) implementing the Salsa etc line of attacks as well as hybrid MitM attacks.
 - [Sparse LWE-specific tool](https://github.com/yonghaason/SparseLWE-estimator) from Yongha Son which is no longer maintained. It implements two papers from 2019 on the [hybrid-dual attack](https://eprint.iacr.org/2019/1114) and [hybrid-primal attack](https://eprint.iacr.org/2019/1019).
 - [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator) from [this paper](https://eprint.iacr.org/2022/1473).
+- [Cool + Cruel = Dual](https://gitlab.com/fvirdia/cool-plus-cruel-equals-dual#running-dropsolve-experiments) from [this paper](https://eprint.iacr.org/2025/1002.pdf).
 
 ## Supported Attacks for Each Tool
 
-Here we give a table listing sparse secret attacks and we describe which tool(s) estimate their cost.
+Here we give a table listing attacks which may be among the most competitive for sparse secret LWE instances, and we describe which tool(s) estimate their cost.
 Where possible we provide a link to the implementation of the estimate. 
 
