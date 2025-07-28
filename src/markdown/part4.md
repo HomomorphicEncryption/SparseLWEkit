@@ -46,7 +46,7 @@ TODO: comment on how we differ from these and why.
     new_parameter_set = LWEParameters(
         n=2**12,
         q = 2**128,
-        Xs=ND.SparseTernary(92), # 92 is the number of 1's, same for -1's, so hw = 192 here
+        Xs=ND.SparseTernary(92), # 92 is the number of 1's, same for -1's, so hw = 184 here
         Xe=ND.DiscreteGaussian(stddev=3.19)
     )
     ```
