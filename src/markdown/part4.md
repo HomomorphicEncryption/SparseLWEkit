@@ -8,9 +8,9 @@ There is a general **rule of thumb** that can be used to have an intuition on th
 - **Fix all the parameters but ctmod**:
     - decreasing ctmod increases the security
     - increasing ctmod decreases the security 
-- **Fix all the parameters but N**:
-    - increasing N increases the security
-    - decreasing N decreases the security
+- **Fix all the parameters but skdim**:
+    - increasing skdim increases the security
+    - decreasing skdim decreases the security
 - **Fix all the parameters but HW**:
     - decreasing HW decreases the security
     - increasing HW increases the security
