@@ -1,4 +1,4 @@
-ID,log2(N),σ,log2(ctmod),HW,Origin
+ID,log2(skdim),σ,log2(ctmod),HW,Origin
 1,17,3.2,2341,128,[HEaaN](https://heaan.it/)
 2,16,3.2,1555,192,[HEaaN](https://heaan.it/)
 3,16,3.2,117,32,[HEaaN](https://heaan.it/)
