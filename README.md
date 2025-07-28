@@ -4,18 +4,18 @@
 
 **Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
 The idea in common between many of these definitions is a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
-This type of secret can be chosen for several reasons, including minimizing and/or bound the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
-Here we will not try to quantify what Hamming weight corresponds to a sparse secret, since we will consider concrete values in security estimations.
+This type of secret can be chosen for several reasons, including minimizing and/or bounding the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
+Here we will not try to quantify what Hamming weight corresponds to a sparse secret, rather we will consider concrete values in security estimations.
 There are already a few different variations of sparse secrets, and many more could be imagined.
 
 We start by describing traditional (non-sparse) secret keys.
 There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform.
-It is natural to design a secret key of size n containing h ones (resp. 1 and -1), with the remaining values being zeros, and calling it a sparse binary secret (resp. sparse ternary secret) if h is small enough, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
+It is natural to design a secret key of size n containing h ones (resp. 1 and -1), with the remaining values being zeros, and calling it a sparse binary secret (resp. sparse ternary secret) if h is sufficiently small, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
 One could define a similar secret with the uniform distribution instead.
 A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
 - a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
 - a sparse secret could allow any Hamming weight below the threshold h;
-- a sparse secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01.
+- a secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01 could be defined as a sparse secret.
 
 ## Goals
 
@@ -49,10 +49,11 @@ FHE schemes.
 - Benchmarking tool from the Meta AI team [Benchmarking Attacks on Learning with Errors (LWE)](https://github.com/facebookresearch/LWE-benchmarking) implementing the Salsa etc line of attacks as well as hybrid MitM attacks.
 - [Sparse LWE-specific tool](https://github.com/yonghaason/SparseLWE-estimator) from Yongha Son which is no longer maintained. It implements two papers from 2019 on the [hybrid-dual attack](https://eprint.iacr.org/2019/1114) and [hybrid-primal attack](https://eprint.iacr.org/2019/1019).
 - [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator) from [this paper](https://eprint.iacr.org/2022/1473).
+- [Cool + Cruel = Dual](https://gitlab.com/fvirdia/cool-plus-cruel-equals-dual#running-dropsolve-experiments) from [this paper](https://eprint.iacr.org/2025/1002.pdf).
 
 ## Supported Attacks for Each Tool
 
-Here we give a table listing sparse secret attacks and we describe which tool(s) estimate their cost.
+Here we give a table listing attacks which may be among the most competitive for sparse secret LWE instances, and we describe which tool(s) estimate their cost.
 Where possible we provide a link to the implementation of the estimate. 
 
 | Attack                                                                              | [Lattice estimator](https://github.com/malb/lattice-estimator)                                                            | [LWE-benchmarking](https://github.com/facebookresearch/LWE-benchmarking)   | [SparseLWE-estimator](https://github.com/yonghaason/SparseLWE-estimator)   | [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator)   |
@@ -74,27 +75,28 @@ Where possible we provide a link to the implementation of the estimate.
 | [AFRICAC:NMWSYCL24](https://eprint.iacr.org/2024/443.pdf)                           | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
 | [Eprint:SWYNSCL24](https://eprint.iacr.org/2024/150)                                | ❌                                                                                                                         | ✅                                                                          | ❌                                                                          | ❌                                                                                  |
 
-Note: The tools in this table are listed in order of the number of attacks they implement, i.e. the number of check marks. Where the numbers of attacks supported are the same, tools are listed alphabetically.
-
 #### Notes
+- The tools in this table are listed in order of the number of attacks they implement, i.e. the number of check marks. Where the numbers of attacks supported are the same, tools are listed alphabetically.
 - 🔒 means that there is an implementation but it is not publicly available.
 - ⚠️ means that the tool only partially implements this attack (for example only the non-sparse variant is implemented)
 
-## Parameters Sets
+## Parameter Sets
 
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-|   ID |   log2(N) |    σ |   log2(ctmod) |   HW | Origin                                                                                          |
-|-----:|----------:|-----:|--------------:|-----:|:------------------------------------------------------------------------------------------------|
-|    3 |        16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                                                                      |
-|    8 |        16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/)                                                    |
-|    1 |        17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                                                                      |
-|    5 |        15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)                                                                 |
-|    4 |        15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                                                                      |
-|    6 |        16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/) [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6) |
-|    2 |        16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                                                                      |
-|    7 |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)                                                                 |
+|   ID |   log2(N) |    σ |   log2(ctmod) |   HW | Origin                                                                                                                                                 |
+|-----:|----------:|-----:|--------------:|-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    3 |        16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    8 |        16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/)                                                                                                           |
+|   10 |        15 | 3.2  |           300 |  128 |                                                                                                                                                        |
+|    1 |        17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    9 |        16 | 3.2  |            61 |  192 | [Lattigo](https://github.com/tuneinsight/lattigo/blob/84f6bc33cb5bd086f595ea3cc2b63f4dd74b2662/circuits/ckks/bootstrapping/parameters_literal.go#L125) |
+|    5 |        15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)                                                                                                                        |
+|    4 |        15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    6 |        16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/) [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                                        |
+|    2 |        16 | 3.2  |          1555 |  192 | [HEaaN](https://heaan.it/)                                                                                                                             |
+|    7 |        17 | 3.19 |          3104 |  192 | [OpenFHE](https://openfhe.org/)                                                                                                                        |
 
 
 Note: In this table, parameter sets are listed in order of increasing Hamming weight and then increasing log2(ctmod). Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
@@ -126,6 +128,22 @@ TODO: fill with the description of the machine used to run the estimations.
 |    6 | 133.99 bits (bdd_mitm_hybrid) 51m9.1s                            |
 |    7 | 135.28 bits (CHHS19_mitm) 1h40m23.0s                             |
 |    8 | 321.96 bits (CHHS19_mitm) 1h24m21.5s                             |
+#### Rule of thumb when the estimators do not provide a result
+
+There is a general **rule of thumb** that can be used to have an intuition on the security estimates of a parameter set **when the estimators are not providing a result**: if you fix all the parameters but one, modifying this specific parameter _(only this one)_ has the following impact on security:
+
+- **Fix all the parameters but ctmod**:
+    - decreasing ctmod increases the security
+    - increasing ctmod decreases the security 
+- **Fix all the parameters but N**:
+    - increasing N increases the security
+    - decreasing N decreases the security
+- **Fix all the parameters but HW**:
+    - decreasing HW decreases the security
+    - increasing HW increases the security
+
+This rule of thumb was used to estimate the security of the parameter set ID 8 (DESILO FHE). The lattice estimator was not able to provide a proper security estimate for this parameter set, however it was able to estimate the parameter set ID 10. In the case of parameter set ID 10, the lattice estimator gave an estimate for security of 237 bits with the attack _bdd_mitm_hybrid_. It is then possible to use the rule of thumb on N to observe that the security of ID 8 is greater or equal to that of ID 10.
+
 
 ### Notes
 
@@ -158,7 +176,7 @@ TODO: comment on how we differ from these and why.
     new_parameter_set = LWEParameters(
         n=2**12,
         q = 2**128,
-        Xs=ND.SparseTernary(92), # 92 is the number of 1's, same for -1's, so hw = 192 here
+        Xs=ND.SparseTernary(92), # 92 is the number of 1's, same for -1's, so hw = 184 here
         Xe=ND.DiscreteGaussian(stddev=3.19)
     )
     ```
