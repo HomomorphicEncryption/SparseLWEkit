@@ -5,7 +5,7 @@ Note: In this table, parameter sets are listed in order of increasing Hamming we
 #### Notations
 - log2(N): log2 of the dimension of the RLWE instance (size of the polynomials)
 - σ: standard deviation of the noise at secret key encryption time
-- log2(ctmod): log2 of the ciphertext modulus (for instance Q corresponds to PQ in the CKKS context)
+- log2(ctmod): log2 of the (maximal) ciphertext modulus (for instance ctmod often corresponds to Q, or to PQ in the CKKS context)
 - HW: Hamming weight of the secret key
 
 #### Instantiation with two parameter sets at once
