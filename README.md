@@ -25,14 +25,14 @@ To enable this, we give an overview of where different cryptanalysis work is cur
 ## Cryptanalysis disclaimer
 
 Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress.
-New attacks may be found at any time, and the landscape is constantly evolving.
+New attacks may be found at any time, and the landscape is is always susceptible to evolve.
 The costs of known attacks can also be revised (upwards and downwards) thanks to refined analyses.
 
-Attacks we are already aware of need to be incorporated into existing tools for use in parameter selection.
+Attacks we are already aware of and may be competitive either need to be better studied and discarded, or incorporated into existing tools for use in parameter selection.
 This means that **existing tools may not give a completely accurate estimate of security**.
 Existing tools may also take a **long time to run**.
-In order to mitigate against confusion caused by long running time, we include running time for the tables we provide.
-We hope this should give users an idea of how long they can expect parameter generation to take.
+In order to mitigate against confusion caused by long running time, we report running time for the tables we provide.
+We hope this gives users an idea of how long they can expect parameter generation to take.
 
 <!-- Extra note: I was also wondering about what parameters there are security reductions for? Perhaps we could write about this somewhere. -->
 
@@ -53,7 +53,7 @@ FHE schemes.
 
 ## Supported Attacks for Each Tool
 
-Here we give a table listing attacks which may be among the most competitive for sparse secret LWE instances, and we describe which tool(s) estimate their cost.
+Here we give a table listing attacks which may be among the most competitive for sparse secret LWE instances, and we describe which tool(s) estimates their cost.
 Where possible we provide a link to the implementation of the estimate. 
 
 | Attack                                                                              | [Lattice estimator](https://github.com/malb/lattice-estimator)                                                            | [LWE-benchmarking](https://github.com/facebookresearch/LWE-benchmarking)   | [SparseLWE-estimator](https://github.com/yonghaason/SparseLWE-estimator)   | [PrimalMeetLWE](https://github.com/yonghaason/PrimalMeetLWE/tree/main/estimator)   |
