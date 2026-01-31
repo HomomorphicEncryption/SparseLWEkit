@@ -25,7 +25,7 @@ To enable this, we give an overview of where different cryptanalysis work is cur
 ## Cryptanalysis disclaimer
 
 Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress.
-New attacks may be found at any time, and the landscape is is always susceptible to evolve.
+New attacks may be found at any time, and the landscape is always susceptible to evolve.
 The costs of known attacks can also be revised (upwards and downwards) thanks to refined analyses.
 
 Attacks we are already aware of and may be competitive either need to be better studied and discarded, or incorporated into existing tools for use in parameter selection.
