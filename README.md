@@ -142,14 +142,14 @@ TODO: need to indicate in the table when the lattice estimator did not estimate 
 There is a general **rule of thumb** that can be used to have an intuition on the security estimates of a parameter set **when the estimators are not providing a result**: if you fix all the parameters but one, modifying this specific parameter _(only this one)_ has the following impact on security:
 
 - **Fix all the parameters but ctmod**:
-    - decreasing ctmod increases the security
-    - increasing ctmod decreases the security 
+    - decreasing ctmod increases security,
+    - increasing ctmod decreases security. 
 - **Fix all the parameters but skdim**:
-    - increasing skdim increases the security
-    - decreasing skdim decreases the security
+    - decreasing skdim decreases security,
+    - increasing skdim increases security.
 - **Fix all the parameters but HW**:
-    - decreasing HW decreases the security
-    - increasing HW increases the security
+    - decreasing HW decreases security,
+    - increasing HW increases security.
 
 This rule of thumb was used to estimate the security of the parameter set ID 8 (DESILO FHE). The lattice estimator was not able to provide a proper security estimate for this parameter set, however it was able to estimate the parameter set ID 10. In the case of parameter set ID 10, the lattice estimator gave an estimate for security of 232.52 bits with the attack _bdd_mitm_hybrid_. It is then possible to use the rule of thumb on N to observe that the security of ID 8 is greater or equal to that of ID 10.
 
