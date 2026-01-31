@@ -9,13 +9,13 @@ Here we will not try to quantify what Hamming weight corresponds to a sparse sec
 There are already a few different variations of sparse secrets, and many more could be imagined.
 
 We start by describing traditional (non-sparse) secret keys.
-There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform.
-It is natural to design a secret key of size n containing h ones (resp. 1 and -1), with the remaining values being zeros, and calling it a sparse binary secret (resp. sparse ternary secret) if h is sufficiently small, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
-One could define a similar secret with the uniform distribution instead.
+There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform modulo an integer q parametrizing the public key space.
+It is natural to design a secret key of dimension n containing h entries equal to 1 (resp. 1 or -1), with the remaining values being 0, and calling it a sparse binary secret (resp. sparse ternary secret) if h is sufficiently small, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
+One could define a similar secret with the uniform mod-q distribution instead.
 A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
-- a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
+- a sparse ternary secret could also publicly provide the number of 1's and -1's it holds;
 - a sparse secret could allow any Hamming weight below the threshold h;
-- a secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01 could be defined as a sparse secret.
+- a secret where each element is sampled from an integer Gaussian with mean 0 and sigma = 0.01 could be defined as a sparse secret, even though the Hamming weight becomes a random variable.
 
 ## Goals
 
