@@ -109,7 +109,11 @@ Note: In this table, parameter sets are listed in order of increasing Hamming we
 
 #### Instantiation with two parameter sets at once
 
-TODO: encapsulation technique and mention the parameter sets that come together, and Lattigo special case and DESILO special case?
+The [sparse secret encapsulation technique](https://eprint.iacr.org/2022/024) is a CKKS bootstrapping variant that relies on a temporary secret key at some stage in the bootstrapping process, and whose purpose is to increase the bootstrapping performance and to lower the bootstrapping failure probability. Relying on this technique hence leads to two combined parameter sets in some CKKS implementations. For example, in the table above, the HEAAN parameters ID #1 and ID #2 are combined. 
+
+TODO: mention the other parameter sets that come together, and Lattigo special case and DESILO special case?
+TODO: mention that a similar technique exists for BGV (used in (older?) Helib) and BFV. 
+
 
 ### Security Estimations
 
