@@ -1,5 +1,17 @@
 # Sparse LWE Kit
 
+## Remaining TODOs
+
+Collating TODOs here to make it easier for people to see.
+0. h vs HW to refer to hamming weight -- disambiguation.
+1. Parameter set 10 origin?
+2. Security estimations section has some gaps -- fill in.
+3. Indicate when the estimator didn't estimate all attacks.
+4. Rule of thumb: where it is applied? Why does the estimator not work in these cases?
+5. Comment on differences from pre-existing sparse secret tables.
+6. Fill in gaps on additional estimators (similarly to LWE estimator).
+7. Check in and synchronise with other groups (esp. benchmarking) who may wish to make use of sparse secrets.
+
 ## Sparse Secrets
 
 **Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
