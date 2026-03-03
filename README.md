@@ -3,6 +3,7 @@
 ## Remaining TODOs
 
 Collating TODOs here to make it easier for people to see.
+
 0. h vs HW to refer to hamming weight -- disambiguation.
 1. Parameter set 10 origin?
 2. Security estimations section has some gaps -- fill in.
