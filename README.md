@@ -7,10 +7,13 @@ Collating TODOs here to make it easier for people to see.
 1. Parameter set 10 origin?
 2. Security estimations section has some gaps -- fill in.
 3. Indicate when the estimator didn't estimate all attacks.
-4. Rule of thumb: where it is applied? Why does the estimator not work in these cases?
-5. Comment on differences from pre-existing sparse secret tables.
-6. Fill in gaps on additional estimators (similarly to LWE estimator).
-7. Check in and synchronise with other groups (esp. benchmarking) who may wish to make use of sparse secrets.
+4. Estimator has some updates (thanks Tabby!) and now estimates a wider range of attacks -- check the current parameters in the latest estimator update
+5. Rule of thumb: where it is applied? Why does the estimator not work in these cases?
+6. Comment on differences from pre-existing sparse secret tables.
+7. Fill in gaps on additional estimators (similarly to LWE estimator).
+8. Check in and synchronise with other groups (esp. benchmarking) who may wish to make use of sparse secrets.
+9. Use Tabby's attack estimator update to check existing parameters.
+10. Decide what to do about this.
 
 ## Sparse Secrets
 
