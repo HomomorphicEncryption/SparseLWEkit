@@ -26,7 +26,7 @@ In this webpage we will not try to quantify what specific Hamming weight corresp
 
 We start by describing traditional (non-sparse) secret keys.
 There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform modulo an integer q parametrizing the public key space.
-A secret key of dimension n containing h entries equal to 1 (resp. 1 or -1), with the remaining values being 0 is called a sparse binary secret (resp. sparse ternary secret) if h < 1/2.
+A secret key of dimension n containing h entries equal to 1 (resp. 1 or -1), with the remaining values being 0 is called a sparse binary secret (resp. sparse ternary secret) if h < n/2.
 Any secret key with a set value of h is called fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
 A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
 - a sparse ternary secret could also publicly provide the number of 1's and -1's it holds;
