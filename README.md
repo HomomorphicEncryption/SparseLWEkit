@@ -16,6 +16,7 @@ Collating TODOs here to make it easier for people to see.
 9. Use Tabby's attack estimator update to check existing parameters.
 10. Decide what to do about this.
 11. Automated pipeline for running the estimator (subject to changes on the estimator)
+12. List what attacks are being considered for this estimation.
 
 ## Sparse Secrets
 
