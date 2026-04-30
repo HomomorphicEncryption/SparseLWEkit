@@ -30,19 +30,19 @@ There are four main random distributions used for coefficients of secret keys:
 - uniform binary;
 - uniform ternary;
 - discretized Gaussian;
-- uniform modulo an integer q.
+- uniform modulo an integer $q$.
 
 There are variants of each of these distributions described as follows:
-- a secret key of dimension n is sparse if it contains h < n/2 non-zero entries;
-- a secret key  is a fixed-Hamming-weight secret if it has a set value of h.
+- a secret key of dimension n is sparse if it contains $h < n/2$ non-zero entries;
+- a secret key  is a fixed-Hamming-weight secret if it has a set value of $h$.
 
-Common choices of Hamming weight in the literature and implementations are h = 64 and h = 92, however, a variety of Hamming weights are considered in practice from 32 up to 1024. 
+Common choices of Hamming weight in the literature and implementations are $h = 64$ and $h = 92$, however, a variety of Hamming weights are considered in practice from 32 up to 1024. 
 
 There are several variations of sparse secrets.
 We do not yet consider these, but some possible distributions include:
 - a sparse ternary secret could also publicly provide the number of 1's and -1's it holds;
-- a sparse secret could allow any Hamming weight below the threshold h;
-- a secret where each element is sampled from an integer Gaussian with mean 0 and sigma = 0.01 could be defined as a sparse secret, even though the Hamming weight becomes a random variable.
+- a sparse secret could allow any Hamming weight below the threshold $h$;
+- a secret where each element is sampled from an integer Gaussian with mean 0 and $\sigma = 0.01$ could be defined as a sparse secret, even though the Hamming weight becomes a random variable.
 
 
 ## Goals
@@ -58,7 +58,7 @@ The costs of known attacks can also be revised (upwards and downwards) thanks to
 
 Attacks we are already aware of and may be competitive either need to be better studied and discarded, or incorporated into existing tools for use in parameter selection.
 This means that **existing tools may not give a completely accurate estimate of security**.
-Existing tools may also take a **long time to run**.
+Existing tools may also take a **long time to run** or simply may not terminate for sufficiently large parameters.
 In order to mitigate against confusion caused by long running time, we report running time for the tables we provide.
 We hope this gives users an idea of how long they can expect parameter generation to take.
 
@@ -69,8 +69,7 @@ We hope this gives users an idea of how long they can expect parameter generatio
 Disclaimer: These tools either do not incorporate sparse secrets, or do so to a limited extent (only some attacks).
 
 - [Lattice estimator](https://github.com/malb/lattice-estimator), the most commonly used tool.
-  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for parameter generation of specific
-FHE schemes.
+  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for parameter generation of specific FHE schemes.
   - [TFHE parameter selection tool](https://eprint.iacr.org/2022/704) which gives optimised parameter sets for TFHE as tables in the paper, and is implemented in the [tfhe-rs library](https://github.com/zama-ai/tfhe-rs).
   - Tool from the TII FHE team which gives [specific formulas](https://eprint.iacr.org/2024/1895.pdf) for estimating security. 
   - Security Guidelines for Implementing Homomorphic Encryption, with [tables](https://eprint.iacr.org/2024/463) and also [code](https://github.com/gong-cr/FHE-Security-Guidelines).
@@ -132,8 +131,8 @@ Note: In this table, parameter sets are listed in order of increasing Hamming we
 #### Notations
 - skdim: dimension of the secret key of the LWE/RLWE instance (corresponding to the size of the polynomials in RLWE), earlier called n in this page
 - σ: standard deviation of the noise at secret key encryption time
-- log2(ctmod): log2 of the (maximal) ciphertext modulus (for instance ctmod often corresponds to Q, or to PQ in the CKKS context)
-- HW: Hamming weight of the secret key, earlier called h in this page
+- log2(ctmod): $log_{2}$ of the (maximal) ciphertext modulus (for instance ctmod often corresponds to $Q$, or to $PQ$ in the CKKS context)
+- HW: Hamming weight of the secret key, earlier called $h$ in this page
 
 #### Instantiation with two parameter sets at once
 
@@ -179,7 +178,7 @@ There is a general **rule of thumb** that can be used to have an intuition on th
     - decreasing HW decreases security,
     - increasing HW increases security.
 
-This rule of thumb was used to estimate the security of the parameter set ID 8 (DESILO FHE). The lattice estimator was not able to provide a proper security estimate for this parameter set, however it was able to estimate the parameter set ID 10. In the case of parameter set ID 10, the lattice estimator gave an estimate for security of 232.52 bits with the attack _bdd_mitm_hybrid_. It is then possible to use the rule of thumb on N to observe that the security of ID 8 is greater or equal to that of ID 10.
+This rule of thumb was used to estimate the security of the parameter set ID 8 (DESILO FHE). The lattice estimator was not able to provide a proper security estimate for this parameter set, however it was able to estimate the parameter set ID 10. In the case of parameter set ID 10, the lattice estimator gave an estimate for security of 232.52 bits with the attack `_bdd_mitm_hybrid_`. It is then possible to use the rule of thumb on N to observe that the security of ID 8 is greater or equal to that of ID 10.
 
 
 ### Notes
