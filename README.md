@@ -1,21 +1,49 @@
 # Sparse LWE Kit
 
+## Remaining TODOs
+
+Collating TODOs here to make it easier for people to see.
+
+0. h vs HW to refer to hamming weight -- disambiguation.
+1. Parameter set 10 origin?
+2. Security estimations section has some gaps -- fill in.
+3. Indicate when the estimator didn't estimate all attacks.
+4. Estimator has some updates (thanks Tabby!) and now estimates a wider range of attacks -- check the current parameters in the latest estimator update
+5. Rule of thumb: where it is applied? Why does the estimator not work in these cases?
+6. Comment on differences from pre-existing sparse secret tables.
+7. Fill in gaps on additional estimators (similarly to LWE estimator).
+8. Check in and synchronise with other groups (esp. benchmarking) who may wish to make use of sparse secrets.
+9. Use Tabby's attack estimator update to check existing parameters.
+10. Decide what to do about this.
+11. Automated pipeline for running the estimator (subject to changes on the estimator)
+12. List what attacks are being considered for this estimation.
+
 ## Sparse Secrets
 
 **Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
 The idea in common between many of these definitions is a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
 This type of secret can be chosen for several reasons, including minimizing and/or bounding the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
-Here we will not try to quantify what Hamming weight corresponds to a sparse secret, rather we will consider concrete values in security estimations.
-There are already a few different variations of sparse secrets, and many more could be imagined.
+In this webpage we will not try to quantify what specific Hamming weight corresponds to a sparse secret, but rather we will consider concrete values of the Hamming Weight.
 
 We start by describing traditional (non-sparse) secret keys.
-There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform modulo an integer $q$ parametrizing the public key space.
-It is natural to design a secret key of dimension $n$ containing $h$ entries equal to 1 (resp. 1 or -1), with the remaining values being 0, and calling it a sparse binary secret (resp. sparse ternary secret) if $h$ is sufficiently small, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
-One could define a similar secret with the uniform $\bmod q$ distribution instead.
-A common choice of Hamming weight in the literature is $h = 64$, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
+There are four main random distributions used for coefficients of secret keys: 
+- uniform binary;
+- uniform ternary;
+- discretized Gaussian;
+- uniform modulo an integer $q$.
+
+There are variants of each of these distributions described as follows:
+- a secret key of dimension n is sparse if it contains $h < n/2$ non-zero entries;
+- a secret key  is a fixed-Hamming-weight secret if it has a set value of $h$.
+
+Common choices of Hamming weight in the literature and implementations are $h = 64$ and $h = 92$, however, a variety of Hamming weights are considered in practice from 32 up to 1024. 
+
+There are several variations of sparse secrets.
+We do not yet consider these, but some possible distributions include:
 - a sparse ternary secret could also publicly provide the number of 1's and -1's it holds;
 - a sparse secret could allow any Hamming weight below the threshold $h$;
 - a secret where each element is sampled from an integer Gaussian with mean 0 and $\sigma = 0.01$ could be defined as a sparse secret, even though the Hamming weight becomes a random variable.
+
 
 ## Goals
 
