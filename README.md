@@ -4,12 +4,12 @@
 
 Collating TODOs here to make it easier for people to see.
 
-0. h vs HW to refer to hamming weight -- disambiguation.
-1. Parameter set 10 origin?
+0. ✅ h vs HW to refer to hamming weight -- disambiguation.
+1. Parameter set 10 origin? (Jean-Philippe emailed)
 2. Security estimations section has some gaps -- fill in.
 3. Indicate when the estimator didn't estimate all attacks.
 4. Estimator has some updates (thanks Tabby!) and now estimates a wider range of attacks -- check the current parameters in the latest estimator update
-5. Rule of thumb: where it is applied? Why does the estimator not work in these cases?
+5. ✅ Rule of thumb: where it is applied? Why does the estimator not work in these cases?
 6. Comment on differences from pre-existing sparse secret tables.
 7. Fill in gaps on additional estimators (similarly to LWE estimator).
 8. Check in and synchronise with other groups (esp. benchmarking) who may wish to make use of sparse secrets.
@@ -17,6 +17,8 @@ Collating TODOs here to make it easier for people to see.
 10. Decide what to do about this.
 11. Automated pipeline for running the estimator (subject to changes on the estimator)
 12. List what attacks are being considered for this estimation.
+13. ✅ Confirm parameter set 9 with Jean-Philippe
+14. Refresh the instructions to run every estimator (Erin)
 
 ## Sparse Secrets
 
@@ -112,13 +114,13 @@ Where possible we provide a link to the implementation of the estimate.
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-|   ID |   log2(skdim) |    σ |   log2(ctmod) |   HW | Origin                                                                                                                                                 |
+|   ID |   log2(skdim) |    σ |   log2(ctmod) |   $h$ | Origin                                                                                                                                                 |
 |-----:|--------------:|-----:|--------------:|-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
 |    3 |            16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                                                                                                                             |
 |    8 |            16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/)                                                                                                           |
 |   10 |            15 | 3.2  |           300 |  128 |                                                                                                                                                        |
 |    1 |            17 | 3.2  |          2341 |  128 | [HEaaN](https://heaan.it/)                                                                                                                             |
-|    9 |            16 | 3.2  |            61 |  192 | [Lattigo](https://github.com/tuneinsight/lattigo/blob/84f6bc33cb5bd086f595ea3cc2b63f4dd74b2662/circuits/ckks/bootstrapping/parameters_literal.go#L125) |
+|    9 |            16 | 3.2  |           121 |   32 | [Lattigo](https://github.com/tuneinsight/lattigo/blob/84f6bc33cb5bd086f595ea3cc2b63f4dd74b2662/circuits/ckks/bootstrapping/parameters_literal.go#L125) |
 |    5 |            15 | 3.19 |           767 |  192 | [OpenFHE](https://openfhe.org/)                                                                                                                        |
 |    4 |            15 | 3.2  |           777 |  192 | [HEaaN](https://heaan.it/)                                                                                                                             |
 |    6 |            16 | 3.19 |          1553 |  192 | [OpenFHE](https://openfhe.org/) [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)                                                        |
@@ -130,9 +132,9 @@ Note: In this table, parameter sets are listed in order of increasing Hamming we
 
 #### Notations
 - skdim: dimension of the secret key of the LWE/RLWE instance (corresponding to the size of the polynomials in RLWE), earlier called n in this page
-- σ: standard deviation of the noise at secret key encryption time
-- log2(ctmod): $log_{2}$ of the (maximal) ciphertext modulus (for instance ctmod often corresponds to $Q$, or to $PQ$ in the CKKS context)
-- HW: Hamming weight of the secret key, earlier called $h$ in this page
+- $\sigma$: standard deviation of the noise at secret key encryption time
+- $\log_{2}(\text{ctmod})$: $\log_{2}$ of the (maximal) ciphertext modulus (for instance ctmod often corresponds to $Q$, or to $PQ$ in the CKKS context)
+- $h$: Hamming weight of the secret key, earlier called $h$ in this page
 
 #### Instantiation with two parameter sets at once
 
@@ -166,7 +168,9 @@ TODO: need to indicate in the table when the lattice estimator did not estimate 
 
 #### Rule of thumb when the estimators do not provide a result
 
-There is a general **rule of thumb** that can be used to have an intuition on the security estimates of a parameter set **when the estimators are not providing a result**: if you fix all the parameters but one, modifying this specific parameter _(only this one)_ has the following impact on security:
+There is a general **rule of thumb** that can be used to have an intuition on the security estimates of a parameter set:
+# **when the estimators are not providing a result**: 
+if you fix all the parameters but one, modifying this specific parameter _(only this one)_ has the following impact on security:
 
 - **Fix all the parameters but ctmod**:
     - decreasing ctmod increases security,
@@ -174,9 +178,9 @@ There is a general **rule of thumb** that can be used to have an intuition on th
 - **Fix all the parameters but skdim**:
     - decreasing skdim decreases security,
     - increasing skdim increases security.
-- **Fix all the parameters but HW**:
-    - decreasing HW decreases security,
-    - increasing HW increases security.
+- **Fix all the parameters but $h$**:
+    - decreasing $h$ decreases security,
+    - increasing $h$ increases security.
 
 This rule of thumb was used to estimate the security of the parameter set ID 8 (DESILO FHE). The lattice estimator was not able to provide a proper security estimate for this parameter set, however it was able to estimate the parameter set ID 10. In the case of parameter set ID 10, the lattice estimator gave an estimate for security of 232.52 bits with the attack `_bdd_mitm_hybrid_`. It is then possible to use the rule of thumb on N to observe that the security of ID 8 is greater or equal to that of ID 10.
 
@@ -212,7 +216,7 @@ TODO: comment on how we differ from these and why.
     new_parameter_set = LWEParameters(
         n=2**12,
         q = 2**128,
-        Xs=ND.SparseTernary(92), # 92 is the number of 1's, same for -1's, so hw = 184 here
+        Xs=ND.SparseTernary(92), # 92 is the number of 1's, same for -1's, so $h$ = 184 here
         Xe=ND.DiscreteGaussian(stddev=3.19)
     )
     ```
