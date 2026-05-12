@@ -19,6 +19,7 @@ Collating TODOs here to make it easier for people to see.
 12. List what attacks are being considered for this estimation.
 13. ✅ Confirm parameter set 9 with Jean-Philippe
 14. Refresh the instructions to run every estimator (Erin)
+15. Clarify what tools were used for the estimation (Antonio's tool, and contents of src/)
 
 ## Sparse Secrets
 
