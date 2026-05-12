@@ -5,7 +5,7 @@
 Collating TODOs here to make it easier for people to see.
 
 0. ✅ h vs HW to refer to hamming weight -- disambiguation.
-1. Parameter set 10 origin? (Jean-Philippe emailed)
+1. Parameter set 10 origin? (Jean-Philippe doesn't know)
 2. Security estimations section has some gaps -- fill in.
 3. Indicate when the estimator didn't estimate all attacks.
 4. Estimator has some updates (thanks Tabby!) and now estimates a wider range of attacks -- check the current parameters in the latest estimator update
@@ -114,7 +114,7 @@ Where possible we provide a link to the implementation of the estimate.
 In this section we give examples of some parameter sets and their current security levels.
 For further information about how the security levels are obtained, please refer the later table comparing the estimation tools.
 
-|   ID |   log2(skdim) |    σ |   log2(ctmod) |   $h$ | Origin                                                                                                                                                 |
+|   ID |   $\log_2(n)$ |    σ |   $\log_2(q)$ |   $h$ | Origin                                                                                                                                                 |
 |-----:|--------------:|-----:|--------------:|-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
 |    3 |            16 | 3.2  |           117 |   32 | [HEaaN](https://heaan.it/)                                                                                                                             |
 |    8 |            16 | 3.2  |           300 |  128 | [DESILO FHE](https://fhe.desilo.dev/latest/)                                                                                                           |
@@ -131,9 +131,9 @@ For further information about how the security levels are obtained, please refer
 Note: In this table, parameter sets are listed in order of increasing Hamming weight and then increasing log2(ctmod). Where parameter sets have the same Hamming weight we list them in alphabetical order by library.
 
 #### Notations
-- skdim: dimension of the secret key of the LWE/RLWE instance (corresponding to the size of the polynomials in RLWE), earlier called n in this page
+- $n$: dimension of the secret key of the LWE/RLWE instance (corresponding to the size of the polynomials in RLWE), earlier called n in this page
 - $\sigma$: standard deviation of the noise at secret key encryption time
-- $\log_{2}(\text{ctmod})$: $\log_{2}$ of the (maximal) ciphertext modulus (for instance ctmod often corresponds to $Q$, or to $PQ$ in the CKKS context)
+- $\log_{2}(\text{q})$: $\log_{2}$ of the (maximal) ciphertext modulus (for instance ctmod often corresponds to $Q$, or to $PQ$ in the CKKS context)
 - $h$: Hamming weight of the secret key, earlier called $h$ in this page
 
 #### Instantiation with two parameter sets at once
