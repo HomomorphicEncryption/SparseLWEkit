@@ -10,7 +10,7 @@ Collating TODOs here to make it easier for people to see.
 3. Indicate when the estimator didn't estimate all attacks.
 4. Estimator has some updates (thanks Tabby!) and now estimates a wider range of attacks -- check the current parameters in the latest estimator update
 5. ✅ Rule of thumb: where it is applied? Why does the estimator not work in these cases?
-6. Comment on differences from pre-existing sparse secret tables.
+6. Comment on differences from pre-existing sparse secret tables. (e.g. https://eprint.iacr.org/2021/039.pdf)
 7. Fill in gaps on additional estimators (similarly to LWE estimator).
 8. Check in and synchronise with other groups (esp. benchmarking) who may wish to make use of sparse secrets.
 9. Use Tabby's attack estimator update to check existing parameters.
