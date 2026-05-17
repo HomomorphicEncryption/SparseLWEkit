@@ -1,4 +1,4 @@
-ID,log2(skdim),σ,log2(ctmod),HW,Origin
+ID,$\log_2(n)$,σ,$\log_2(q)$,$h$,Origin
 1,17,3.2,2341,128,[HEaaN](https://heaan.it/)
 2,16,3.2,1555,192,[HEaaN](https://heaan.it/)
 3,16,3.2,117,32,[HEaaN](https://heaan.it/)
@@ -7,5 +7,4 @@ ID,log2(skdim),σ,log2(ctmod),HW,Origin
 6,16,3.19,1553,192,[OpenFHE](https://openfhe.org/) [Lattigo](https://pkg.go.dev/github.com/tuneinsight/lattigo/v6)
 7,17,3.19,3104,192,[OpenFHE](https://openfhe.org/)
 8,16,3.2,300,128,[DESILO FHE](https://fhe.desilo.dev/latest/)
-9,16,3.2,61,192,[Lattigo](https://github.com/tuneinsight/lattigo/blob/84f6bc33cb5bd086f595ea3cc2b63f4dd74b2662/circuits/ckks/bootstrapping/parameters_literal.go#L125)
-10,15,3.2,300,128, 
+9,16,3.2,121,32,[Lattigo](https://github.com/tuneinsight/lattigo/blob/5dbffbdea05394de2ca3a432ed5318aa832e3f40/circuits/ckks/bootstrapping/parameters_literal.go#L63)

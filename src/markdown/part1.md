@@ -5,17 +5,27 @@
 **Sparse secret** is an umbrella term for several related concepts within the FHE literature and among its many implementations.
 The idea in common between many of these definitions is a secret key with a ‘sufficiently small’ publicly-known Hamming weight (number of non-zero values contained inside a vector).
 This type of secret can be chosen for several reasons, including minimizing and/or bounding the error growth during FHE computation, and improving bootstrapping (lower failure probability and/or smaller modulus consumption).
-Here we will not try to quantify what Hamming weight corresponds to a sparse secret, rather we will consider concrete values in security estimations.
-There are already a few different variations of sparse secrets, and many more could be imagined.
+In this webpage we will not try to quantify what specific Hamming weight corresponds to a sparse secret, but rather we will consider concrete values of the Hamming Weight.
 
 We start by describing traditional (non-sparse) secret keys.
-There are four main random distributions used for coefficients of secret keys: uniform binary, uniform ternary, discretized Gaussian and uniform.
-It is natural to design a secret key of size n containing h ones (resp. 1 and -1), with the remaining values being zeros, and calling it a sparse binary secret (resp. sparse ternary secret) if h is sufficiently small, or calling it fixed-Hamming-weight binary secret (resp. fixed-Hamming-weight ternary secret).
-One could define a similar secret with the uniform distribution instead.
-A common choice of Hamming weight in the literature is h = 64, however, a variety of Hamming weights are considered in practice from 32 up to 1024. As mentioned above, there are many variations of sparse secrets, for instance:
-- a sparse ternary secret could also publicly provide the number of 1s and -1s it holds;
-- a sparse secret could allow any Hamming weight below the threshold h;
-- a secret where each element is sampled from a integer Gaussian with mean 0 and sigma = 0.01 could be defined as a sparse secret.
+There are four main random distributions used for coefficients of secret keys: 
+- uniform binary;
+- uniform ternary;
+- discretized Gaussian;
+- uniform modulo an integer $q$.
+
+There are variants of each of these distributions described as follows:
+- a secret key of dimension n is sparse if it contains $h < n/2$ non-zero entries;
+- a secret key  is a fixed-Hamming-weight secret if it has a set value of $h$.
+
+Common choices of Hamming weight in the literature and implementations are $h = 64$ and $h = 92$, however, a variety of Hamming weights are considered in practice from 32 up to 1024. 
+
+There are several variations of sparse secrets.
+We do not yet consider these, but some possible distributions include:
+- a sparse ternary secret could also publicly provide the number of 1's and -1's it holds;
+- a sparse secret could allow any Hamming weight below the threshold $h$;
+- a secret where each element is sampled from an integer Gaussian with mean 0 and $\sigma = 0.01$ could be defined as a sparse secret, even though the Hamming weight becomes a random variable.
+
 
 ## Goals
 
@@ -25,12 +35,12 @@ To enable this, we give an overview of where different cryptanalysis work is cur
 ## Cryptanalysis disclaimer
 
 Users of the sparseLWEkit, and users of any parameter selection tool, should be aware that cryptanalysis is always a work in progress.
-New attacks may be found at any time, and the landscape is is always susceptible to evolve.
+New attacks may be found at any time, and the landscape is always susceptible to evolve.
 The costs of known attacks can also be revised (upwards and downwards) thanks to refined analyses.
 
 Attacks we are already aware of and may be competitive either need to be better studied and discarded, or incorporated into existing tools for use in parameter selection.
 This means that **existing tools may not give a completely accurate estimate of security**.
-Existing tools may also take a **long time to run**.
+Existing tools may also take a **long time to run** or simply may not terminate for sufficiently large parameters.
 In order to mitigate against confusion caused by long running time, we report running time for the tables we provide.
 We hope this gives users an idea of how long they can expect parameter generation to take.
 
@@ -41,8 +51,7 @@ We hope this gives users an idea of how long they can expect parameter generatio
 Disclaimer: These tools either do not incorporate sparse secrets, or do so to a limited extent (only some attacks).
 
 - [Lattice estimator](https://github.com/malb/lattice-estimator), the most commonly used tool.
-  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for parameter generation of specific
-FHE schemes.
+  - OpenFHE has an [adapted version](https://github.com/openfheorg/openfhe-lattice-estimator) of the lattice estimator for parameter generation of specific FHE schemes.
   - [TFHE parameter selection tool](https://eprint.iacr.org/2022/704) which gives optimised parameter sets for TFHE as tables in the paper, and is implemented in the [tfhe-rs library](https://github.com/zama-ai/tfhe-rs).
   - Tool from the TII FHE team which gives [specific formulas](https://eprint.iacr.org/2024/1895.pdf) for estimating security. 
   - Security Guidelines for Implementing Homomorphic Encryption, with [tables](https://eprint.iacr.org/2024/463) and also [code](https://github.com/gong-cr/FHE-Security-Guidelines).
