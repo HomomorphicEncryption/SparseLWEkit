@@ -1,4 +1,5 @@
 from multiprocessing import cpu_count
+import argparse
 import pandas as pd
 import time
 import platform
@@ -34,11 +35,25 @@ def estimate_security_lattice_estimator(logn, sigma, logq, h, m=oo, num_cores=1)
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run lattice-estimator security estimates over the parameter database.")
+    parser.add_argument("--ids", default=None,
+                        help="Comma-separated list of parameter IDs to estimate. Default: all rows.")
+    parser.add_argument("--output", default=None,
+                        help="Output CSV path. Default: src/data/<toolname>_estimates.csv.")
+    parser.add_argument("--jobs", type=int, default=None,
+                        help="Number of parallel attack workers passed to LWE.estimate(jobs=...). Default: cpu_count()//2.")
+    args = parser.parse_args()
+
     toolnames = ['lattice_estimator']
     parameters_db = pd.read_csv('src/data/parameter_db.csv')
 
-    # default to using half of the available cores
-    num_cores = cpu_count() // 2
+    if args.ids is not None:
+        wanted = [int(x) for x in args.ids.split(",") if x.strip()]
+        parameters_db = parameters_db[parameters_db["ID"].isin(wanted)].reset_index(drop=True)
+        if parameters_db.empty:
+            raise SystemExit(f"No parameter rows match --ids={args.ids}")
+
+    num_cores = args.jobs if args.jobs is not None else cpu_count() // 2
     # a string which specifies the machine used to generate estimates
     machine_info = f"{platform.system()} {platform.release()},{platform.machine()},{num_cores} cores"
 
@@ -54,7 +69,8 @@ if __name__ == "__main__":
         tool_estimates["machine_info"] = machine_info
         tool_estimates["tool_commit"] = tool_commit
 
-        tool_estimates.to_csv(f"src/data/{toolname}_estimates.csv", index=False)
+        output_path = args.output if args.output is not None else f"src/data/{toolname}_estimates.csv"
+        tool_estimates.to_csv(output_path, index=False)
         # print(tool_estimates.to_markdown(index=False))
 
 

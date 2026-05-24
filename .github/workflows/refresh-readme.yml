@@ -1,0 +1,155 @@
+name: Refresh README
+
+on:
+  schedule:
+    # 06:00 UTC on the 1st of each month.
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+# Read-only by default; the assemble job upgrades to contents:write to push back.
+permissions:
+  contents: read
+
+concurrency:
+  group: refresh-readme-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      sha: ${{ steps.bump.outputs.sha }}
+      short_sha: ${{ steps.bump.outputs.short_sha }}
+      ids: ${{ steps.matrix.outputs.ids }}
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Bump lattice-estimator submodule to upstream HEAD
+        id: bump
+        run: |
+          set -euo pipefail
+          git submodule update --remote --recursive src/lattice_estimator
+          sha=$(git -C src/lattice_estimator rev-parse HEAD)
+          short=$(git -C src/lattice_estimator rev-parse --short HEAD)
+          echo "lattice-estimator HEAD: $sha"
+          {
+            echo "sha=$sha"
+            echo "short_sha=$short"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Compute shard matrix from parameter_db.csv
+        id: matrix
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --break-system-packages pandas
+          ids=$(python3 -c "import json,pandas as pd; print(json.dumps(pd.read_csv('src/data/parameter_db.csv')['ID'].tolist()))")
+          echo "matrix ids: $ids"
+          echo "ids=$ids" >> "$GITHUB_OUTPUT"
+
+  estimate:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    container:
+      image: sagemath/sagemath:latest
+      options: --user root
+    strategy:
+      fail-fast: false
+      matrix:
+        id: ${{ fromJson(needs.prepare.outputs.ids) }}
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mark workspace as a safe git directory
+        run: git config --global --add safe.directory '*'
+
+      - name: Clone lattice-estimator at the prepared SHA
+        run: |
+          set -euo pipefail
+          rm -rf src/lattice_estimator
+          git clone https://github.com/malb/lattice-estimator.git src/lattice_estimator
+          git -C src/lattice_estimator checkout ${{ needs.prepare.outputs.sha }}
+
+      - name: Install Python deps into Sage's interpreter
+        run: sage --pip install --no-warn-script-location -r src/requirements.txt
+
+      - name: Estimate parameter set ID ${{ matrix.id }}
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          sage --python src/estimate_security.py \
+            --ids ${{ matrix.id }} \
+            --output out/partial-${{ matrix.id }}.csv \
+            --jobs 2
+
+      - name: Upload partial CSV
+        uses: actions/upload-artifact@v4
+        with:
+          name: estimates-${{ matrix.id }}
+          path: out/partial-${{ matrix.id }}.csv
+          if-no-files-found: error
+          retention-days: 7
+
+  assemble:
+    needs: [prepare, estimate]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout (full history, with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Pin lattice-estimator submodule to prepare's SHA
+        run: |
+          set -euo pipefail
+          cd src/lattice_estimator
+          git fetch --unshallow origin 2>/dev/null || git fetch origin
+          git checkout ${{ needs.prepare.outputs.sha }}
+
+      - name: Download all partial CSVs
+        uses: actions/download-artifact@v4
+        with:
+          path: partials
+          pattern: estimates-*
+
+      - name: Merge partial CSVs into the canonical estimates file
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --break-system-packages pandas
+          python3 - <<'PY'
+          import glob
+          import pandas as pd
+          paths = sorted(glob.glob("partials/estimates-*/partial-*.csv"))
+          if not paths:
+              raise SystemExit("no partial CSVs found under partials/")
+          frames = [pd.read_csv(p) for p in paths]
+          merged = pd.concat(frames, ignore_index=True).sort_values("ID").reset_index(drop=True)
+          merged.to_csv("src/data/lattice_estimator_estimates.csv", index=False)
+          print(merged.to_string(index=False))
+          PY
+
+      - name: Regenerate README
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --break-system-packages -r src/requirements.txt
+          make readme
+
+      - name: Commit and push if anything changed
+        run: |
+          set -euo pipefail
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No changes — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lattice_estimator src/data/lattice_estimator_estimates.csv README.md
+          git commit -m "chore: monthly estimator refresh (lattice-estimator ${{ needs.prepare.outputs.short_sha }})"
+          git push origin HEAD:${GITHUB_REF_NAME}
