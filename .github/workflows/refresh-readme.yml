@@ -1,0 +1,271 @@
+name: Refresh README
+
+on:
+  schedule:
+    # 06:00 UTC on the 1st of each month.
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+# Read-only by default. Only the commit job upgrades to write.
+permissions:
+  contents: read
+
+concurrency:
+  group: refresh-readme-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      sha: ${{ steps.bump.outputs.sha }}
+      short_sha: ${{ steps.bump.outputs.short_sha }}
+      ids: ${{ steps.matrix.outputs.ids }}
+      changed: ${{ steps.changed.outputs.changed }}
+    steps:
+      - name: Checkout (with submodules, full history)
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          submodules: recursive
+          # fetch-depth: 0 so the change-detection step can ask git
+          # which commit last touched the estimates CSV.
+          fetch-depth: 0
+
+      - name: Bump lattice-estimator submodule to upstream HEAD
+        id: bump
+        run: |
+          set -euo pipefail
+          git submodule update --remote --recursive src/lattice_estimator
+          sha=$(git -C src/lattice_estimator rev-parse HEAD)
+          short=$(git -C src/lattice_estimator rev-parse --short HEAD)
+          echo "lattice-estimator HEAD: $sha"
+          {
+            echo "sha=$sha"
+            echo "short_sha=$short"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Detect whether a refresh is needed
+        id: changed
+        run: |
+          set -euo pipefail
+          committed=$(git ls-tree HEAD src/lattice_estimator | awk '{print $3}')
+          bumped="${{ steps.bump.outputs.sha }}"
+          result="false"
+          if [[ "$bumped" != "$committed" ]]; then
+            echo "estimator moved $committed -> $bumped"
+            result="true"
+          elif drift=$(python3 ci/parameters_diverged.py); then
+            if [[ "$drift" == "true" ]]; then
+              echo "parameter_db.csv differs from cached estimates"
+              result="true"
+            else
+              echo "estimator and parameter_db unchanged — downstream jobs will skip"
+            fi
+          else
+            echo "parameters_diverged.py crashed — assuming refresh needed"
+            result="true"
+          fi
+          echo "changed=$result" >> "$GITHUB_OUTPUT"
+
+      - name: Compute shard matrix from parameter_db.csv
+        id: matrix
+        run: |
+          set -euo pipefail
+          ids=$(python3 ci/list_parameter_ids.py)
+          echo "matrix ids: $ids"
+          echo "ids=$ids" >> "$GITHUB_OUTPUT"
+
+  estimate:
+    needs: prepare
+    if: needs.prepare.outputs.changed == 'true'
+    runs-on: ubuntu-24.04
+    permissions: {}  # no token; this job runs upstream estimator code
+    container:
+      image: sagemath/sagemath:latest
+      options: --user root
+    defaults:
+      run:
+        # The sagemath container's default shell is dash, which does not
+        # support `set -o pipefail`. Force bash for all run steps in this job.
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        id: ${{ fromJson(needs.prepare.outputs.ids) }}
+    timeout-minutes: 60
+    steps:
+      - name: Install git in container
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends git ca-certificates
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Mark workspace as a safe git directory
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE/src/lattice_estimator"
+
+      - name: Clone lattice-estimator at the prepared SHA
+        env:
+          SUBMODULE_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          set -euo pipefail
+          rm -rf src/lattice_estimator
+          git clone https://github.com/malb/lattice-estimator.git src/lattice_estimator
+          git -C src/lattice_estimator checkout "$SUBMODULE_SHA"
+
+      - name: Install Python deps into Sage's interpreter
+        run: sage --pip install --no-warn-script-location -r src/requirements.txt
+
+      - name: Estimate parameter set
+        env:
+          MATRIX_ID: ${{ matrix.id }}
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          sage --python src/estimate_security.py \
+            --ids "$MATRIX_ID" \
+            --output "out/partial-$MATRIX_ID.csv" \
+            --jobs 2
+
+      - name: Show estimates
+        if: always()
+        env:
+          MATRIX_ID: ${{ matrix.id }}
+        run: |
+          echo "::group::Estimates for parameter set $MATRIX_ID"
+          if [[ -f "out/partial-$MATRIX_ID.csv" ]]; then
+            (command -v column >/dev/null && column -s, -t "out/partial-$MATRIX_ID.csv") || cat "out/partial-$MATRIX_ID.csv"
+          else
+            echo "(no partial CSV produced — estimator failed before writing output)"
+          fi
+          echo "::endgroup::"
+
+      - name: Upload partial CSV
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: estimates-${{ matrix.id }}
+          path: out/partial-${{ matrix.id }}.csv
+          if-no-files-found: error
+          retention-days: 7
+
+  # Tokenless: merges partial CSVs and regenerates README. The output
+  # README + canonical CSV are passed to the commit job as an artifact so
+  # the privileged job only handles git/PR mechanics.
+  build:
+    needs: [prepare, estimate]
+    if: needs.prepare.outputs.changed == 'true'
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Create venv and install Python deps
+        run: |
+          set -euo pipefail
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet -r src/requirements.txt
+
+      - name: Download all partial CSVs (scoped to this run)
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          path: partials
+          pattern: estimates-*
+          run-id: ${{ github.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Merge partial CSVs into the canonical estimates file
+        run: |
+          .venv/bin/python ci/merge_estimates.py 'partials/estimates-*/partial-*.csv' \
+            --parameter-db src/data/parameter_db.csv
+
+      - name: Regenerate README
+        run: PATH="$PWD/.venv/bin:$PATH" make readme
+
+      - name: Upload regenerated README + estimates CSV
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: refreshed-readme
+          path: |
+            README.md
+            src/data/lattice_estimator_estimates.csv
+          if-no-files-found: error
+          retention-days: 7
+
+  # Minimal write-permission job: pins the submodule, copies the artifact
+  # from `build` into place, commits to a chore branch, and opens a PR.
+  # Does not run estimator or pandas code.
+  commit:
+    needs: [prepare, build]
+    if: needs.prepare.outputs.changed == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout (full history, with submodules)
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Pin lattice-estimator submodule to prepare's SHA
+        env:
+          SUBMODULE_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          set -euo pipefail
+          cd src/lattice_estimator
+          git fetch --unshallow origin 2>/dev/null || git fetch origin
+          git checkout "$SUBMODULE_SHA"
+
+      - name: Download regenerated README + CSV
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: refreshed-readme
+          run-id: ${{ github.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Open PR if anything changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHORT_SHA: ${{ needs.prepare.outputs.short_sha }}
+          BASE_BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          # Check only the paths we actually commit (artifact download
+          # leaves untracked files that would otherwise mask the no-op path).
+          tracked_paths=(src/lattice_estimator src/data/lattice_estimator_estimates.csv README.md)
+          if [[ -z "$(git status --porcelain -- "${tracked_paths[@]}")" ]]; then
+            echo "No changes to estimator pin, estimates, or README — nothing to commit."
+            exit 0
+          fi
+
+          branch="chore/refresh-readme-$(date -u +%Y%m%d)-${GITHUB_RUN_ID}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$branch"
+          git add -- "${tracked_paths[@]}"
+          git commit -m "chore: monthly estimator refresh (lattice-estimator ${SHORT_SHA})"
+          git push origin "$branch"
+
+          # Body is built via printf with positional args so no shell
+          # expansion of attacker-controllable values happens in a heredoc.
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body=$(printf 'Automated refresh from the `Refresh README` workflow.\n\n- lattice-estimator submodule resolved to upstream main HEAD: `%s`\n- Re-ran the estimator across all parameter sets in `src/data/parameter_db.csv`\n- Regenerated `README.md` from the refreshed CSV\n\nTriggered by `%s` against base `%s` (run [#%s](%s)).\n' \
+            "$SHORT_SHA" "$GITHUB_EVENT_NAME" "$BASE_BRANCH" "$GITHUB_RUN_ID" "$run_url")
+
+          gh pr create \
+            --base "$BASE_BRANCH" \
+            --head "$branch" \
+            --title "chore: monthly estimator refresh (lattice-estimator ${SHORT_SHA})" \
+            --body "$body"
